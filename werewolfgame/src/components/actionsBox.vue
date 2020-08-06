@@ -4,7 +4,7 @@
         <!-- Hunt -->
         <div class="row">
             <div class="col-4">
-                  <b-button squared>Icon <br /> Hunt</b-button>
+                  <b-button squared @click="huntHandler">Icon <br /> Hunt</b-button>
             </div>
             <div class="col-8">
                 Information on action
@@ -53,3 +53,18 @@
     </b-container>
     </section>
 </template>
+
+<script>
+import {Actions} from "../methods/actions.js";
+
+export default {
+  name: "actionsBox",
+  data() {
+  },
+  methods:{
+    huntHandler: function(){
+      Actions.hunt();
+    }
+  }
+};
+</script>

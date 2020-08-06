@@ -24,6 +24,8 @@ import LogBox from './components/logBox.vue'
 import ActionsBox from './components/actionsBox.vue'
 import Footer from './components/footer.vue'
 
+
+
 export default {
   name: 'App',
   components: {
@@ -31,6 +33,8 @@ export default {
     LogBox,
     ActionsBox,
     Footer,
+  },
+  methods: {
   }
 }
 
