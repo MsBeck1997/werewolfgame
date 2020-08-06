@@ -2,25 +2,43 @@
     <section>
     <!-- Stats Bars -->
     <div>
-        <b-progress :value="value" :max="100" class="mb-3"></b-progress>
-        <h5>Health <br /> 51/100</h5>
+        <b-container fluid>
+            <div class="row">
+                <!-- Stats -->
+                <div class="col-2">
+                    <b-progress :value="value" :max="100" class="mb-3"></b-progress>
+                    <p>Health <br /> 51/100</p>
+                </div>
+                <div class="col-2">
+                    <b-progress :value="value" :max="100" class="mb-3"></b-progress>
+                    <p>Sanity <br /> 51/100</p>
+                </div>
 
-        <b-progress :value="value" :max="100" class="mb-3"></b-progress>
-        <h5>Sanity <br /> 51/100</h5>
+                <div class="col-2">
+                    <b-progress :value="value" :max="100" class="mb-3"></b-progress>
+                    <p>Bloodlust <br /> 51/100</p>
+                </div>
 
-        <b-progress :value="value" :max="100" class="mb-3"></b-progress>
-        <h5>Bloodlust <br /> 51/100</h5>
+                <div class="col-2">
+                    <b-progress :value="value" :max="100" class="mb-3"></b-progress>
+                    <p>Suspicion <br /> 51/100</p>
+                </div>
 
-        <b-progress :value="value" :max="100" class="mb-3"></b-progress>
-        <h5>Suspicion <br /> 51/100</h5>
-    </div>
+                <!-- Time -->
+                <div class="col-2">
+                    Time: Morning
+                    <br />
+                    Day:
+                </div>
 
-    <!-- Time Info -->
-    <div>
+                <div class="col-2">
+                    Waxing Moon
+                    <br />
+                    Transform in: 3 days
+                </div>
+            </div>
+        </b-container>
 
-        <h5>Time: Morning</h5>
-        <h5>Waxing Moon</h5>
-        <h5>Transform in: 3 days</h5>
     </div>
     </section>
 </template>

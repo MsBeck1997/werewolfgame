@@ -1,8 +1,18 @@
 <template>
   <div id="app">
     <StatusBar />
-    <LogBox />
-    <ActionsBox />
+
+    <b-container fluid>
+      <div class="row">
+        <div class="col-3">
+          <ActionsBox />
+        </div>
+        <div class="col-9">
+          <LogBox />
+        </div>
+      </div>
+    </b-container>
+
     <Footer />
   </div>
 </template>

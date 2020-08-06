@@ -1,3 +1,55 @@
 <template>
-    <h1>This is the actions box.</h1>
+    <section>
+    <b-container>
+        <!-- Hunt -->
+        <div class="row">
+            <div class="col-4">
+                  <b-button squared>Icon <br /> Hunt</b-button>
+            </div>
+            <div class="col-8">
+                Information on action
+            </div>
+        </div>
+
+        <!-- Church -->
+        <div class="row">
+            <div class="col-4">
+                  <b-button squared>Icon <br /> Church</b-button>
+            </div>
+            <div class="col-8">
+                Information on action
+            </div>
+        </div>
+
+        <!-- Rest -->
+        <div class="row">
+            <div class="col-4">
+                <b-button squared>Icon <br /> Rest</b-button>
+            </div>
+            <div class="col-8">
+                Information on action
+            </div>
+        </div>
+
+        <!-- Gather -->
+        <div class="row">
+            <div class="col-4">
+                <b-button squared>Icon <br /> Gather</b-button>
+            </div>
+            <div class="col-8">
+                Information on action
+            </div>
+        </div>
+
+        <!-- Brew -->
+        <div class="row">
+            <div class="col-4">
+                <b-button squared>Icon <br /> Brew</b-button>
+            </div>
+            <div class="col-8">
+                Information on action
+            </div>
+        </div>
+    </b-container>
+    </section>
 </template>

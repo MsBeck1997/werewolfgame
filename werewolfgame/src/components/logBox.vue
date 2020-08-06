@@ -1,6 +1,6 @@
 <template>
     <section>
-        <div>
+        <div class="border border-secondary">
             <p>Log 1</p>
             <p>Log 2</p>
         </div>
