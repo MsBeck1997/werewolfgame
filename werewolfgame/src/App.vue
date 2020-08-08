@@ -108,8 +108,7 @@
             <!-- Log Box -->
             <section>
                 <div class="border border-secondary">
-                    <p>Log 1</p>
-                    <p>Log 2</p>
+                    {{ diceOutput }}
                 </div>
             </section>
 
@@ -135,6 +134,9 @@
 <script>
 export default {
   name: 'App',
+  data: function() {
+    return { diceOutput: '' }
+  },
   methods: {
     hunt: function() {
         // Update time in statusBar
@@ -142,13 +144,21 @@ export default {
         // Calculate a random percent rounded
         let roll = Math.floor(Math.random() * 100)
           if (roll < 11) {
-            console.log('epic failure')
+            console.log('Epic failure')
+            this.diceOutput = 'Epic failure'
+            return this.diceOutput;
           } else if (roll < 50) {
             console.log('Failure')
+            this.diceOutput = 'Failure'
+            return this.diceOutput;
           } else if (roll < 90) {
             console.log('Success')
+            this.diceOutput = 'Success'
+            return this.diceOutput;
           } else if (roll < 101) {
-            console.log('Epic Success')
+            console.log('Epic success')
+            this.diceOutput = 'Epic success'
+            return this.diceOutput;
           }
         // Push changes to stats in statusBar
         // Publish result in log box
