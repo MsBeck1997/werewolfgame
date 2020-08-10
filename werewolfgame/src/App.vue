@@ -108,10 +108,11 @@
             <!-- Log Box -->
             <section>
                 <div class="border border-secondary">
-                    {{ diceOutput }} <br /> <br />
+                    {{ diceOutput }}
+                    <br /> <br />
                     <ul>
-                        <li v-for="(message,index) in data.logBox" :key="index">
-                            {{ message }}
+                        <li v-for="(message,index) in data.logBox.reverse()" :key="index">
+                            {{ message  }}
                         </li>
                     </ul>
                 </div>
