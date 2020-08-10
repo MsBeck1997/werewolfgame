@@ -28,15 +28,15 @@
 
                 <!-- Time -->
                 <div class="col-2">
-                    Time: Morning
+                    Time: {{ data.time.timeOfDay }}
                     <br />
-                    Day:
+                    Day: {{ data.time.day }}
                 </div>
 
                 <div class="col-2">
-                    Waxing Moon
+                    {{ data.time.moonStatus }}
                     <br />
-                    Transform in: 3 days
+                    Transform in: {{ data.time.tranformCountdown }}
                 </div>
             </div>
         </b-container>
@@ -145,14 +145,57 @@ export default {
     return {
         data: {
             diceOutput: '',
-            logBox: []
+            logBox: [],
+            currentTime: 1,
+            time: { day: '1', timeOfDay: 'Morning', moonStatus: 'Waning Moon', tranformCountdown: '3 days'},
         }
      }
   },
 
   methods: {
+    handleTime: function() {
+        // HandleTime is a function that takes the currentTime (which is a simple counter modified by actions), and calculates
+        // the day, time of day, and moon cycle from it. It then pushes the change to the time object for usage in the DOM.
+
+        let currentTime = this.data.currentTime
+
+        // Calculate day
+        this.data.time.day = Math.ceiling(currentTime / 4)
+
+        // Calculate time of day
+        if (currentTime % 4 == 0) {
+            this.data.time.timeOfDay = 'Night'
+        } else if (currentTime % 4 == 1) {
+            this.data.time.timeOfDay = 'Morning'
+        } else if (currentTime % 4 == 2) {
+            this.data.time.timeOfDay = 'Afternoon'
+        } else if (currentTime % 4 == 0) {
+            this.data.time.timeOfDay = 'Evening'
+        }
+
+        // Calculate moon and transform
+        if (currentTime % 4 == 0) {
+            this.data.time.moonStatus = 'Full Moon'
+            this.data.time.tranformCountdown = 'Tonight'
+        } else if (currentTime % 4 == 1) {
+            this.data.time.moonStatus = 'Waning Moon'
+            this.data.time.tranformCountdown = '3 days'
+        } else if (currentTime % 4 == 2) {
+            this.data.time.moonStatus = 'New Moon'
+            this.data.time.tranformCountdown = '2 days'
+        } else if (currentTime % 4 == 0) {
+            this.data.time.moonStatus = 'Waxing Moon'
+            this.data.time.tranformCountdown = 'Tomorrow'
+        }
+    },
+
     hunt: function() {
+        // Hunt is an action that rolls a dice, publishes the result to the logBox, and modifies the currentTime and stats in data.
+
         // Update time in statusBar
+        this.data.currentTime++
+        this.handleTime
+        console.log(this.data.currentTime)
 
         // Calculate a random percent rounded
         let roll = Math.floor(Math.random() * 100)
@@ -180,19 +223,6 @@ export default {
         // Push changes to stats in statusBar
         // Publish result in log box
     },
-//    time: function() {
-//      // Keep a current log of time as a whole number
-//          // Add inputNumber to current log time
-//      // Calculate current day
-//          // Take currentTime, divide by 4 round up
-//      // Calculate current time of day (ToD)
-//          // Take currentTime, remainder of 4
-//              // 1 => morning
-//              // 2 => afternoon
-//              // 3 => Evening
-//              // 4 => night
-//      // Return object of {day: #, ToD: string}
-//    },
 
   },
 }
