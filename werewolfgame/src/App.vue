@@ -108,9 +108,10 @@
             <!-- Log Box -->
             <section>
                 <div class="border border-secondary">
+                    {{ diceOutput }} <br /> <br />
                     <ul>
-                        <li v-for="(log,index) in data.logBox" :key="index">
-                            {{ log }}
+                        <li v-for="(message,index) in data.logBox" :key="index">
+                            {{ message }}
                         </li>
                     </ul>
                 </div>
@@ -143,7 +144,7 @@ export default {
     return {
         data: {
             diceOutput: '',
-            logBox: ['this', 'is', 'a', 'test']
+            logBox: []
         }
      }
   },
@@ -157,18 +158,22 @@ export default {
           if (roll < 11) {
             console.log('Epic failure')
             this.diceOutput = 'Epic failure'
+            this.data.logBox.push("Epic failure")
             return this.diceOutput;
           } else if (roll < 50) {
             console.log('Failure')
             this.diceOutput = 'Failure'
+            this.data.logBox.push("Failure")
             return this.diceOutput;
           } else if (roll < 90) {
             console.log('Success')
             this.diceOutput = 'Success'
+            this.data.logBox.push("Success")
             return this.diceOutput;
           } else if (roll < 101) {
             console.log('Epic success')
             this.diceOutput = 'Epic success'
+            this.data.logBox.push("Epic success")
             return this.diceOutput;
           }
         // Push changes to stats in statusBar
