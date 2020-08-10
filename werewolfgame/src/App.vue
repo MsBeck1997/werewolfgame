@@ -108,7 +108,7 @@
             <!-- Log Box -->
             <section>
                 <div class="border border-secondary">
-                    {{ diceOutput }}
+                    {{ logBox }}
                 </div>
             </section>
 
@@ -135,7 +135,9 @@
 export default {
   name: 'App',
   data: function() {
-    return { diceOutput: '' }
+    return { diceOutput: '',
+             logBox: [],
+           }
   },
   methods: {
     hunt: function() {
