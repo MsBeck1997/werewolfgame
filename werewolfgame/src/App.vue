@@ -108,7 +108,11 @@
             <!-- Log Box -->
             <section>
                 <div class="border border-secondary">
-                    {{ logBox }}
+                    <ul>
+                        <li v-for="(log,index) in data.logBox" :key="index">
+                            {{ log }}
+                        </li>
+                    </ul>
                 </div>
             </section>
 
@@ -134,11 +138,16 @@
 <script>
 export default {
   name: 'App',
+
   data: function() {
-    return { diceOutput: '',
-             logBox: [],
-           }
+    return {
+        data: {
+            diceOutput: '',
+            logBox: ['this', 'is', 'a', 'test']
+        }
+     }
   },
+
   methods: {
     hunt: function() {
         // Update time in statusBar
@@ -192,4 +201,6 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+
 </style>
