@@ -187,6 +187,8 @@ export default {
             this.data.time.moonStatus = 'Waxing Moon'
             this.data.time.tranformCountdown = 'Tomorrow'
         }
+
+        vm.$forceUpdate();
     },
 
     hunt: function() {
