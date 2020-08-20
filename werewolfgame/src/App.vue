@@ -38,7 +38,7 @@
                 <div class="col-2">
                     {{ info.time.moonStatus }}
                     <br />
-                    Transform in: {{ info.time.tranformCountdown }}
+                    Transform in: {{ info.time.transformCountdown }}
                 </div>
             </div>
         </b-container>
@@ -174,16 +174,16 @@ export default {
         }
 
         // Calculate moon and transform
-        if (timeObject.currentTime % 4 === 0) {
+        if (timeObject.day % 4 === 0) {
             timeObject.moonStatus = 'Full Moon'
             timeObject.transformCountdown = 'Tonight'
-        } else if (timeObject.currentTime % 4 === 1) {
+        } else if (timeObject.day % 4 === 1) {
             timeObject.moonStatus = 'Waning Moon'
             timeObject.transformCountdown = '3 days'
-        } else if (timeObject.currentTime % 4 === 2) {
+        } else if (timeObject.day% 4 === 2) {
             timeObject.moonStatus = 'New Moon'
             timeObject.transformCountdown = '2 days'
-        } else if (timeObject.currentTime % 4 === 3) {
+        } else if (timeObject.day% 4 === 3) {
             timeObject.moonStatus = 'Waxing Moon'
             timeObject.transformCountdown = 'Tomorrow'
         }
