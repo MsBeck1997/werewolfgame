@@ -7,6 +7,7 @@
         <b-container fluid>
             <div class="row">
                 <!-- Stats -->
+                <!--
                 <div class="col-2">
                     <b-progress :value="value" :max="100" class="mb-3"></b-progress>
                     <p>Health <br /> 51/100</p>
@@ -25,6 +26,7 @@
                     <b-progress :value="value" :max="100" class="mb-3"></b-progress>
                     <p>Suspicion <br /> 51/100</p>
                 </div>
+                -->
 
                 <!-- Time -->
                 <div class="col-2">
@@ -109,11 +111,11 @@
             <section>
                 {{ info.currentTime }}
                 <div class="border border-secondary">
-                    {{ diceOutput }}
+                    {{ info.diceOutput }}
                     <br /> <br />
                     <ul>
-                        <li v-for="(message,index) in info.logBox.reverse()" :key="index">
-                            {{ message  }}
+                        <li v-for="(message,index) in info.logBox" :key="index">
+                            {{ message }}
                         </li>
                     </ul>
                 </div>
@@ -161,27 +163,27 @@ export default {
         timeObject.day = Math.ceil(timeObject.currentTime / 4)
 
         // Calculate time of day
-        if (timeObject.currentTime % 4 == 0) {
+        if (timeObject.currentTime % 4 === 0) {
             timeObject.timeOfDay = 'Night'
-        } else if (timeObject.currentTime % 4 == 1) {
+        } else if (timeObject.currentTime % 4 === 1) {
             timeObject.timeOfDay = 'Morning'
-        } else if (timeObject.currentTime % 4 == 2) {
+        } else if (timeObject.currentTime % 4 === 2) {
             timeObject.timeOfDay = 'Afternoon'
-        } else if (timeObject.currentTime % 4 == 0) {
+        } else if (timeObject.currentTime % 4 === 3) {
             timeObject.timeOfDay = 'Evening'
         }
 
         // Calculate moon and transform
-        if (timeObject.currentTime % 4 == 0) {
+        if (timeObject.currentTime % 4 === 0) {
             timeObject.moonStatus = 'Full Moon'
             timeObject.transformCountdown = 'Tonight'
-        } else if (timeObject.currentTime % 4 == 1) {
+        } else if (timeObject.currentTime % 4 === 1) {
             timeObject.moonStatus = 'Waning Moon'
             timeObject.transformCountdown = '3 days'
-        } else if (timeObject.currentTime % 4 == 2) {
+        } else if (timeObject.currentTime % 4 === 2) {
             timeObject.moonStatus = 'New Moon'
             timeObject.transformCountdown = '2 days'
-        } else if (timeObject.currentTime % 4 == 0) {
+        } else if (timeObject.currentTime % 4 === 3) {
             timeObject.moonStatus = 'Waxing Moon'
             timeObject.transformCountdown = 'Tomorrow'
         }
@@ -201,19 +203,19 @@ export default {
           if (roll < 11) {
             console.log('Epic failure')
             this.diceOutput = 'Epic failure'
-            this.info.logBox.push("Epic failure")
+            this.info.logBox.unshift("Epic failure")
           } else if (roll < 50) {
             console.log('Failure')
             this.diceOutput = 'Failure'
-            this.info.logBox.push("Failure")
+            this.info.logBox.unshift("Failure")
           } else if (roll < 90) {
             console.log('Success')
             this.diceOutput = 'Success'
-            this.info.logBox.push("Success")
+            this.info.logBox.unshift("Success")
           } else if (roll < 101) {
             console.log('Epic success')
             this.diceOutput = 'Epic success'
-            this.info.logBox.push("Epic success")
+            this.info.logBox.unshift("Epic success")
           }
         // Push changes to stats in statusBar
         // Publish result in log box
