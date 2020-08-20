@@ -65,7 +65,7 @@
                 <!-- Church -->
                 <div class="row">
                     <div class="col-4">
-                          <b-button squared>Icon <br /> Church</b-button>
+                          <b-button squared @click="church(info.time)">Icon <br /> Church</b-button>
                     </div>
                     <div class="col-8">
                         Information on action
@@ -95,7 +95,7 @@
                 <!-- Brew -->
                 <div class="row">
                     <div class="col-4">
-                        <b-button squared>Icon <br /> Brew</b-button>
+                        <b-button squared @click="brew(info.brew, info.time)">Icon <br /> Brew</b-button>
                     </div>
                     <div class="col-8">
                         Information on action
@@ -150,6 +150,7 @@ export default {
             diceOutput: '',
             logBox: [],
             time: { currentTime: '1', day: '1', timeOfDay: 'Morning', moonStatus: 'Waning Moon', transformCountdown: '3 days'},
+            brew: { brewLevel: '0', herbs: '0'},
         }
     }
   },
@@ -196,9 +197,7 @@ export default {
 
         // Update time in statusBar
         timeObject.currentTime++
-        console.log(timeObject.currentTime)
 
-        // Calculate a random percent rounded
         let roll = Math.floor(Math.random() * 100)
           if (roll < 11) {
             console.log('Epic failure')
@@ -217,9 +216,88 @@ export default {
             this.diceOutput = 'Epic success'
             this.info.logBox.unshift("Epic success")
           }
-        // Push changes to stats in statusBar
-        // Publish result in log box
 
+          this.handleTime(timeObject)
+          return this.diceOutput;
+    },
+
+    church: function(timeObject) {
+        // Church is an action that checks the timeOfDay to verify morning or afternoon, then rolls a dice & publishes
+        // the result to logBox. Then it modifies currentTime and statChanges, storing the data.
+
+        if (timeObject.timeOfDay = 'Morning' || timeObject.timeOfDay = 'Afternoon') {
+          let roll = Math.floor(Math.random() * 100)
+          if (roll < 11) {
+            console.log('Epic failure')
+            this.diceOutput = 'Epic failure'
+            this.info.logBox.unshift("Epic failure")
+          } else if (roll < 50) {
+            console.log('Failure')
+            this.diceOutput = 'Failure'
+            this.info.logBox.unshift("Failure")
+          } else if (roll < 90) {
+            console.log('Success')
+            this.diceOutput = 'Success'
+            this.info.logBox.unshift("Success")
+          } else if (roll < 101) {
+            console.log('Epic success')
+            this.diceOutput = 'Epic success'
+            this.info.logBox.unshift("Epic success")
+          }
+        } else {
+            this.info.logBox.unshift("You think about attending church, but no services are taking place right now. You should come back when one is happening.")
+        }
+
+        this.handleTime(timeObject)
+        return this.diceOutput;
+    },
+
+    brew: function(timeObject, brewObject) {
+        // Brew is an action that checks if your inventory has enough herbs to brew (>=3), then uses your brewing level
+        // to roll a dice & publish the result to the logBox. Finally, it modifies the currentTime and stats in data.
+
+        if (this.info.brew.herbs >= 3) {
+            if (this.info.brew.brewLevel === 0) {
+              let roll = Math.floor(Math.random() * 100)
+              if (roll < 11) {
+                this.diceOutput = 'Epic failure'
+                this.info.logBox.unshift("Epic failure")
+              } else if (roll < 50) {
+                this.diceOutput = 'Failure'
+                this.info.logBox.unshift("Failure")
+              } else if (roll < 90) {
+                this.diceOutput = 'Success'
+                this.info.logBox.unshift("Success")
+              } else if (roll < 101) {
+                this.diceOutput = 'Epic success'
+                this.info.logBox.unshift("Epic success")
+              }
+            } else if (this.info.brew.brewLevel === 1) {
+              let roll = Math.floor(Math.random() * 100)
+              if (roll < 11) {
+                console.log('Epic failure')
+                this.diceOutput = 'Epic failure'
+                this.info.logBox.unshift("Epic failure")
+              } else if (roll < 50) {
+                console.log('Failure')
+                this.diceOutput = 'Failure'
+                this.info.logBox.unshift("Failure")
+              } else if (roll < 90) {
+                console.log('Success')
+                this.diceOutput = 'Success'
+                this.info.logBox.unshift("Success")
+              } else if (roll < 101) {
+                console.log('Epic success')
+                this.diceOutput = 'Epic success'
+                this.info.logBox.unshift("Epic success")
+              }
+            }
+
+        } else {
+            this.info.logBox.unshift("You consider brewing something, but realize you don't have enough supplies to do so. Maybe you should try your luck gathering some herbs.")
+        }
+
+          this.handleBrew(brewObject)
           this.handleTime(timeObject)
           return this.diceOutput;
     },
