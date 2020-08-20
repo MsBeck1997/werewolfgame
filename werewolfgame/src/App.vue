@@ -147,9 +147,9 @@ export default {
         info: {
             diceOutput: '',
             logBox: [],
-            time: { currentTime: '1', day: '1', timeOfDay: 'Morning', moonStatus: 'Waning Moon', tranformCountdown: '3 days'},
+            time: { currentTime: '1', day: '1', timeOfDay: 'Morning', moonStatus: 'Waning Moon', transformCountdown: '3 days'},
         }
-     }
+    }
   },
 
   methods: {
@@ -158,7 +158,7 @@ export default {
         // the day, time of day, and moon cycle from it. It then pushes the change to the time object for usage in the DOM.
 
         // Calculate day
-        timeObject.day = Math.ceiling(timeObject.currentTime / 4)
+        timeObject.day = Math.ceil(timeObject.currentTime / 4)
 
         // Calculate time of day
         if (timeObject.currentTime % 4 == 0) {
@@ -174,19 +174,19 @@ export default {
         // Calculate moon and transform
         if (timeObject.currentTime % 4 == 0) {
             timeObject.moonStatus = 'Full Moon'
-            timeObject.tranformCountdown = 'Tonight'
+            timeObject.transformCountdown = 'Tonight'
         } else if (timeObject.currentTime % 4 == 1) {
             timeObject.moonStatus = 'Waning Moon'
-            timeObject.tranformCountdown = '3 days'
+            timeObject.transformCountdown = '3 days'
         } else if (timeObject.currentTime % 4 == 2) {
             timeObject.moonStatus = 'New Moon'
-            timeObject.tranformCountdown = '2 days'
+            timeObject.transformCountdown = '2 days'
         } else if (timeObject.currentTime % 4 == 0) {
             timeObject.moonStatus = 'Waxing Moon'
-            timeObject.tranformCountdown = 'Tomorrow'
+            timeObject.transformCountdown = 'Tomorrow'
         }
 
-        return timeObject
+        this.info.time = timeObject
     },
 
     hunt: function(timeObject) {
@@ -202,27 +202,24 @@ export default {
             console.log('Epic failure')
             this.diceOutput = 'Epic failure'
             this.info.logBox.push("Epic failure")
-            return this.diceOutput;
           } else if (roll < 50) {
             console.log('Failure')
             this.diceOutput = 'Failure'
             this.info.logBox.push("Failure")
-            return this.diceOutput;
           } else if (roll < 90) {
             console.log('Success')
             this.diceOutput = 'Success'
             this.info.logBox.push("Success")
-            return this.diceOutput;
           } else if (roll < 101) {
             console.log('Epic success')
             this.diceOutput = 'Epic success'
             this.info.logBox.push("Epic success")
-            return this.diceOutput;
           }
         // Push changes to stats in statusBar
         // Publish result in log box
 
           this.handleTime(timeObject)
+          return this.diceOutput;
     },
 
   },
