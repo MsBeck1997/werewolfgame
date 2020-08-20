@@ -28,15 +28,15 @@
 
                 <!-- Time -->
                 <div class="col-2">
-                    Time: {{ data.time.timeOfDay }}
+                    Time: {{ info.time.timeOfDay }}
                     <br />
-                    Day: {{ data.time.day }}
+                    Day: {{ info.time.day }}
                 </div>
 
                 <div class="col-2">
-                    {{ data.time.moonStatus }}
+                    {{ info.time.moonStatus }}
                     <br />
-                    Transform in: {{ data.time.tranformCountdown }}
+                    Transform in: {{ info.time.tranformCountdown }}
                 </div>
             </div>
         </b-container>
@@ -53,7 +53,7 @@
                 <!-- Hunt -->
                 <div class="row">
                     <div class="col-4">
-                          <b-button squared @click="hunt">Icon <br /> Hunt</b-button>
+                          <b-button squared @click="hunt(info.time)">Icon <br /> Hunt</b-button>
                     </div>
                     <div class="col-8">
                         Information on action
@@ -107,11 +107,12 @@
 
             <!-- Log Box -->
             <section>
+                {{ info.currentTime }}
                 <div class="border border-secondary">
                     {{ diceOutput }}
                     <br /> <br />
                     <ul>
-                        <li v-for="(message,index) in data.logBox.reverse()" :key="index">
+                        <li v-for="(message,index) in info.logBox.reverse()" :key="index">
                             {{ message  }}
                         </li>
                     </ul>
@@ -143,87 +144,85 @@ export default {
 
   data: function() {
     return {
-        data: {
+        info: {
             diceOutput: '',
             logBox: [],
-            currentTime: 1,
-            time: { day: '1', timeOfDay: 'Morning', moonStatus: 'Waning Moon', tranformCountdown: '3 days'},
+            time: { currentTime: '1', day: '1', timeOfDay: 'Morning', moonStatus: 'Waning Moon', tranformCountdown: '3 days'},
         }
      }
   },
 
   methods: {
-    handleTime: function() {
+    handleTime: function(timeObject) {
         // HandleTime is a function that takes the currentTime (which is a simple counter modified by actions), and calculates
         // the day, time of day, and moon cycle from it. It then pushes the change to the time object for usage in the DOM.
 
-        let currentTime = this.data.currentTime
-
         // Calculate day
-        this.data.time.day = Math.ceiling(currentTime / 4)
+        timeObject.day = Math.ceiling(timeObject.currentTime / 4)
 
         // Calculate time of day
-        if (currentTime % 4 == 0) {
-            this.data.time.timeOfDay = 'Night'
-        } else if (currentTime % 4 == 1) {
-            this.data.time.timeOfDay = 'Morning'
-        } else if (currentTime % 4 == 2) {
-            this.data.time.timeOfDay = 'Afternoon'
-        } else if (currentTime % 4 == 0) {
-            this.data.time.timeOfDay = 'Evening'
+        if (timeObject.currentTime % 4 == 0) {
+            timeObject.timeOfDay = 'Night'
+        } else if (timeObject.currentTime % 4 == 1) {
+            timeObject.timeOfDay = 'Morning'
+        } else if (timeObject.currentTime % 4 == 2) {
+            timeObject.timeOfDay = 'Afternoon'
+        } else if (timeObject.currentTime % 4 == 0) {
+            timeObject.timeOfDay = 'Evening'
         }
 
         // Calculate moon and transform
-        if (currentTime % 4 == 0) {
-            this.data.time.moonStatus = 'Full Moon'
-            this.data.time.tranformCountdown = 'Tonight'
-        } else if (currentTime % 4 == 1) {
-            this.data.time.moonStatus = 'Waning Moon'
-            this.data.time.tranformCountdown = '3 days'
-        } else if (currentTime % 4 == 2) {
-            this.data.time.moonStatus = 'New Moon'
-            this.data.time.tranformCountdown = '2 days'
-        } else if (currentTime % 4 == 0) {
-            this.data.time.moonStatus = 'Waxing Moon'
-            this.data.time.tranformCountdown = 'Tomorrow'
+        if (timeObject.currentTime % 4 == 0) {
+            timeObject.moonStatus = 'Full Moon'
+            timeObject.tranformCountdown = 'Tonight'
+        } else if (timeObject.currentTime % 4 == 1) {
+            timeObject.moonStatus = 'Waning Moon'
+            timeObject.tranformCountdown = '3 days'
+        } else if (timeObject.currentTime % 4 == 2) {
+            timeObject.moonStatus = 'New Moon'
+            timeObject.tranformCountdown = '2 days'
+        } else if (timeObject.currentTime % 4 == 0) {
+            timeObject.moonStatus = 'Waxing Moon'
+            timeObject.tranformCountdown = 'Tomorrow'
         }
 
-        vm.$forceUpdate();
+        return timeObject
     },
 
-    hunt: function() {
+    hunt: function(timeObject) {
         // Hunt is an action that rolls a dice, publishes the result to the logBox, and modifies the currentTime and stats in data.
 
         // Update time in statusBar
-        this.data.currentTime++
-        this.handleTime
-        console.log(this.data.currentTime)
+        timeObject.currentTime++
+        console.log(timeObject.currentTime)
 
         // Calculate a random percent rounded
         let roll = Math.floor(Math.random() * 100)
           if (roll < 11) {
             console.log('Epic failure')
             this.diceOutput = 'Epic failure'
-            this.data.logBox.push("Epic failure")
+            this.info.logBox.push("Epic failure")
             return this.diceOutput;
           } else if (roll < 50) {
             console.log('Failure')
             this.diceOutput = 'Failure'
-            this.data.logBox.push("Failure")
+            this.info.logBox.push("Failure")
             return this.diceOutput;
           } else if (roll < 90) {
             console.log('Success')
             this.diceOutput = 'Success'
-            this.data.logBox.push("Success")
+            this.info.logBox.push("Success")
             return this.diceOutput;
           } else if (roll < 101) {
             console.log('Epic success')
             this.diceOutput = 'Epic success'
-            this.data.logBox.push("Epic success")
+            this.info.logBox.push("Epic success")
             return this.diceOutput;
           }
         // Push changes to stats in statusBar
         // Publish result in log box
+
+          this.handleTime(timeObject)
     },
 
   },
