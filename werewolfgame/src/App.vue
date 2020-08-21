@@ -7,26 +7,24 @@
         <b-container fluid>
             <div class="row">
                 <!-- Stats -->
-                <!--
                 <div class="col-2">
-                    <b-progress :value="value" :max="100" class="mb-3"></b-progress>
-                    <p>Health <br /> 51/100</p>
+                    <b-progress :value="info.stats.health" :max="100" class="mb-3"></b-progress>
+                    <p>Health <br /> {{ info.stats.health }}/100</p>
                 </div>
                 <div class="col-2">
-                    <b-progress :value="value" :max="100" class="mb-3"></b-progress>
-                    <p>Sanity <br /> 51/100</p>
-                </div>
-
-                <div class="col-2">
-                    <b-progress :value="value" :max="100" class="mb-3"></b-progress>
-                    <p>Bloodlust <br /> 51/100</p>
+                    <b-progress :value="info.stats.sanity" :max="100" class="mb-3"></b-progress>
+                    <p>Sanity <br /> {{ info.stats.sanity }}/100</p>
                 </div>
 
                 <div class="col-2">
-                    <b-progress :value="value" :max="100" class="mb-3"></b-progress>
-                    <p>Suspicion <br /> 51/100</p>
+                    <b-progress :value="info.stats.bloodlust" :max="100" class="mb-3"></b-progress>
+                    <p>Bloodlust <br /> {{ info.stats.bloodlust }}/100</p>
                 </div>
-                -->
+
+                <div class="col-2">
+                    <b-progress :value="info.stats.suspicion" :max="100" class="mb-3"></b-progress>
+                    <p>Suspicion <br /> {{ info.stats.suspicion }}/100</p>
+                </div>
 
                 <!-- Time -->
                 <div class="col-2">
@@ -148,8 +146,9 @@ export default {
     return {
         info: {
             diceOutput: '',
-            logBox: [],
+            logBox: ['First Log', ],
             time: { currentTime: '1', day: '1', timeOfDay: 'Morning', moonStatus: 'Waning Moon', transformCountdown: '3 days'},
+            stats: { health: '75', sanity: '75', bloodlust: '15', suspicion: '0' },
             brew: { brewLevel: '0', herbs: '0'},
         }
     }
@@ -192,6 +191,58 @@ export default {
         this.info.time = timeObject
     },
 
+    statTracker: function(statsObject, timeObject) {
+        // StatTracker is a function that handles stat changes from actions and modifies them in data to ensure >100 and <0.
+        // It also handles failure conditions and random events due to stats not being maintained.
+
+        // Health Handler
+        if (statsObject.health > 100) {
+            statsObject.health === 100
+        } else if (statsObject.health <= 0) {
+            statsObject.health === 0
+            this.info.logBox.unshift("You feel the last remaining bit of life drain from your body. At least no one will be terrorized by a monster anymore... As you die, you can't help but wonder if there was a better way than death.")
+        }
+
+        // Sanity Handler
+        if (statsObject.sanity > 100) {
+            statsObject.sanity === 100
+        } else if (statsObject.sanity <= 0) {
+            statsObject.sanity === 33
+            this.info.logBox.unshift("You feel strange, moments before everything goes dark. On the brink of insanity, the curse was released, allowing destruction to commence. You feel terrible. You have to control yourself better.")
+            statsObject.health -= 15
+            statsObject.bloodlust -= 60
+            statsObject.suspicion += 20
+            timeObject.currentTime += 3
+        }
+
+        // Bloodlust Handler
+        if (statsObject.bloodlust < 0) {
+            statsObject.bloodlust === 0
+        } else if (statsObject.bloodlust <= 100) {
+            statsObject.bloodlust === 0
+            this.info.logBox.unshift("You feel strange, moments before everything goes dark. On the brink of insanity, the curse was released, allowing destruction to commence. You feel terrible. You have to control yourself better.")
+            statsObject.health -= 15
+            statsObject.sanity -= 20
+            statsObject.suspicion += 20
+            timeObject.currentTime += 3
+        }
+
+        // Suspicion Handler
+        if (statsObject.suspicion < 0) {
+            statsObject.suspicion === 0
+        } else if (statsObject.suspicion <= 100) {
+            statsObject.suspicion === 90
+            this.info.logBox.unshift("Moments before it happens, you catch sight of the stalker following you. You manage to fight them off, killing them in the process. You know that if you don't reduce suspicion in the townsfolk, that was just the first of many.")
+            statsObject.health -= 15
+            statsObject.sanity -= 20
+            statsObject.bloodlust -= 25
+            timeObject.currentTime += 2
+        }
+
+        this.info.stats = statsObject
+        this.info.time = timeObject
+    },
+
     hunt: function(timeObject) {
         // Hunt is an action that rolls a dice, publishes the result to the logBox, and modifies the currentTime and stats in data.
 
@@ -225,7 +276,7 @@ export default {
         // Church is an action that checks the timeOfDay to verify morning or afternoon, then rolls a dice & publishes
         // the result to logBox. Then it modifies currentTime and statChanges, storing the data.
 
-        if (timeObject.timeOfDay = 'Morning' || timeObject.timeOfDay = 'Afternoon') {
+        if (timeObject.timeOfDay === 'Morning' || timeObject.timeOfDay === 'Afternoon') {
           let roll = Math.floor(Math.random() * 100)
           if (roll < 11) {
             console.log('Epic failure')
