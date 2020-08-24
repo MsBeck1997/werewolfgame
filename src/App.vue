@@ -73,7 +73,7 @@
                 <!-- Rest -->
                 <div class="row">
                     <div class="col-4">
-                        <b-button squared>Icon <br /> Rest</b-button>
+                        <b-button squared @click="rest(info.time, info.stats)">Icon <br /> Rest</b-button>
                     </div>
                     <div class="col-8">
                         Information on action
@@ -148,8 +148,8 @@ export default {
             diceOutput: '',
             logBox: ['First Log', ],
             time: { currentTime: '1', day: '1', timeOfDay: 'Morning', moonStatus: 'Waning Moon', transformCountdown: '3 days'},
-            stats: { health: '75', sanity: '75', bloodlust: '15', suspicion: '0' },
-            brew: { brewLevel: '0', herbs: '0'},
+            stats: { health: 75, sanity: 75, bloodlust: 15, suspicion: 0 },
+            brew: { brewLevel: 0, herbs: 0},
         }
     }
   },
@@ -191,8 +191,8 @@ export default {
         this.info.time = timeObject
     },
 
-    statTracker: function(statsObject, timeObject) {
-        // StatTracker is a function that handles stat changes from actions and modifies them in data to ensure >100 and <0.
+    handleStats: function(timeObject, statsObject) {
+        // handleStats is a function that handles stat changes from actions and modifies them in data to ensure >100 and <0.
         // It also handles failure conditions and random events due to stats not being maintained.
 
         // Health Handler
@@ -303,8 +303,24 @@ export default {
         return this.diceOutput;
     },
 
-    rest: function() {
+    rest: function(timeObject, statsObject) {
+        // Rest is an action that slightly improves your stats for the tradeoff of time. Can't be preformed if your
+        // sanity is too low (<25).
 
+        timeObject.currentTime++
+
+        if (statsObject.sanity < 25) {
+            this.info.logBox.unshift("You try to rest your eyes, but nightmares plauge you. Sounds of death, images of fear, scents of blood seep into your dreams. You don't feel rested. You don't feel sane.")
+        } else {
+            statsObject.health += 5
+            statsObject.sanity += 10
+            statsObject.bloodlust += 5
+            statsObject.suspicion -= 5
+            this.info.logBox.unshift("Dreams consume you and you frolic in a better time. You awake feeling slightly better, if not slightly hungry. +Health  +Sanity  +Bloodlust  -Suspicion")
+        }
+
+        this.handleTime(timeObject)
+        this.handleStats(statsObject)
     },
 
     brew: function(timeObject, brewObject) {
