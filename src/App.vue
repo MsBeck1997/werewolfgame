@@ -209,21 +209,15 @@ export default {
         } else if (statsObject.sanity <= 0) {
             statsObject.sanity === 33
             this.info.logBox.unshift("You feel strange, moments before everything goes dark. On the brink of insanity, the curse was released, allowing destruction to commence. You feel terrible. You have to control yourself better.")
-            statsObject.health -= 15
-            statsObject.bloodlust -= 60
-            statsObject.suspicion += 20
             timeObject.currentTime += 3
         }
 
         // Bloodlust Handler
         if (statsObject.bloodlust < 0) {
             statsObject.bloodlust === 0
-        } else if (statsObject.bloodlust <= 100) {
+        } else if (statsObject.bloodlust >= 100) {
             statsObject.bloodlust === 0
-            this.info.logBox.unshift("You feel strange, moments before everything goes dark. On the brink of insanity, the curse was released, allowing destruction to commence. You feel terrible. You have to control yourself better.")
-            statsObject.health -= 15
-            statsObject.sanity -= 20
-            statsObject.suspicion += 20
+            this.info.logBox.unshift("You feel strange, moments before everything goes dark. As the hunger consumes you, the curse is released, allowing destruction to commence. You feel terrible. You have to control yourself better.")
             timeObject.currentTime += 3
         }
 
@@ -233,9 +227,6 @@ export default {
         } else if (statsObject.suspicion <= 100) {
             statsObject.suspicion === 90
             this.info.logBox.unshift("Moments before it happens, you catch sight of the stalker following you. You manage to fight them off, killing them in the process. You know that if you don't reduce suspicion in the townsfolk, that was just the first of many.")
-            statsObject.health -= 15
-            statsObject.sanity -= 20
-            statsObject.bloodlust -= 25
             timeObject.currentTime += 2
         }
 
@@ -320,7 +311,7 @@ export default {
         }
 
         this.handleTime(timeObject)
-        this.handleStats(statsObject)
+        this.handleStats(timeObject, statsObject)
     },
 
     brew: function(timeObject, brewObject) {
