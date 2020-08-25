@@ -312,7 +312,7 @@ export default {
         timeObject.currentTime++
 
         if (statsObject.sanity < 25) {
-            this.info.logBox.unshift("You try to rest your eyes, but nightmares plauge you. Sounds of death, images of fear, scents of blood seep into your dreams. You don't feel rested. You don't feel sane.")
+            this.info.logBox.unshift("You try to rest your eyes, but nightmares plague you. Sounds of death, images of fear, scents of blood seep into your dreams. You don't feel rested. You don't feel sane.")
         } else {
             statsObject.health += 5
             statsObject.sanity += 10
@@ -326,11 +326,37 @@ export default {
     },
 
     gather: function(timeObject, brewObject, statsObject) {
-        console.log('gather')
+      // Gather is an action that rolls a dice, publishes the result to the logBox, and modifies the currentTime and stats in data.
+      // If successful, it adds herbs to brewObject.
+
+      timeObject.currentTime++
+
+      let roll = Math.floor(Math.random() * 100)
+        if (roll < 11) {
+          console.log('Epic failure')
+          this.diceOutput = 'Epic failure'
+          this.info.logBox.unshift("Epic failure")
+        } else if (roll < 50) {
+          console.log('Failure')
+          this.diceOutput = 'Failure'
+          this.info.logBox.unshift("Failure")
+        } else if (roll < 90) {
+          console.log('Success')
+          this.diceOutput = 'Success'
+          this.info.logBox.unshift("Success")
+        } else if (roll < 101) {
+          console.log('Epic success')
+          this.diceOutput = 'Epic success'
+          this.info.logBox.unshift("Epic success")
+        }
+
+        this.handleTime(timeObject)
 
         this.info.stats = statsObject
         this.info.time = timeObject
         this.info.brew = brewObject
+
+        return this.diceOutput;
     },
 
     brew: function(timeObject, brewObject) {
