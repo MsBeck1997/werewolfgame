@@ -53,7 +53,7 @@
                 <!-- Hunt -->
                 <div class="row">
                     <div class="col-4">
-                          <b-button squared @click="hunt(info.time)">Icon <br /> Hunt</b-button>
+                          <b-button squared :disabled="info.endGame" @click="hunt(info.time)">Icon <br /> Hunt</b-button>
                     </div>
                     <div class="col-8">
                         Information on action
@@ -63,7 +63,7 @@
                 <!-- Church -->
                 <div class="row">
                     <div class="col-4">
-                          <b-button squared @click="church(info.time)">Icon <br /> Church</b-button>
+                          <b-button squared :disabled="info.endGame" @click="church(info.time)">Icon <br /> Church</b-button>
                     </div>
                     <div class="col-8">
                         Information on action
@@ -73,7 +73,7 @@
                 <!-- Rest -->
                 <div class="row">
                     <div class="col-4">
-                        <b-button squared @click="rest(info.time, info.stats)">Icon <br /> Rest</b-button>
+                        <b-button squared :disabled="info.endGame" @click="rest(info.time, info.stats)">Icon <br /> Rest</b-button>
                     </div>
                     <div class="col-8">
                         Information on action
@@ -83,7 +83,7 @@
                 <!-- Gather -->
                 <div class="row">
                     <div class="col-4">
-                        <b-button squared @click="gather(info.time, info.brew, info.stats)">Icon <br /> Gather</b-button>
+                        <b-button squared :disabled="info.endGame" @click="gather(info.time, info.brew, info.stats)">Icon <br /> Gather</b-button>
                     </div>
                     <div class="col-8">
                         Information on action
@@ -93,7 +93,7 @@
                 <!-- Brew -->
                 <div class="row">
                     <div class="col-4">
-                        <b-button squared @click="brew(info.brew, info.time)">Icon <br /> Brew</b-button>
+                        <b-button squared :disabled="info.endGame" @click="brew(info.brew, info.time)">Icon <br /> Brew</b-button>
                     </div>
                     <div class="col-8">
                         Information on action
@@ -150,6 +150,7 @@ export default {
             time: { currentTime: 1, day: 1, timeOfDay: 'Morning', moonStatus: 'Waning Moon', transformCountdown: '3 days'},
             stats: { health: 75, sanity: 75, bloodlust: 15, suspicion: 0 },
             brew: { brewLevel: 0, herbs: 0},
+            endGame: false,
         }
     }
   },
@@ -211,6 +212,7 @@ export default {
             statsObject.health === 100
         } else if (statsObject.health <= 0) {
             statsObject.health === 0
+            this.info.endGame = 'disabled'
             this.info.logBox.unshift("You feel the last remaining bit of life drain from your body. At least no one will be terrorized by a monster anymore... As you die, you can't help but wonder if there was a better way than death.")
         }
 
