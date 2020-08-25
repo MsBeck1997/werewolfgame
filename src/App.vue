@@ -147,7 +147,7 @@ export default {
         info: {
             diceOutput: '',
             logBox: ['First Log', ],
-            time: { currentTime: '1', day: '1', timeOfDay: 'Morning', moonStatus: 'Waning Moon', transformCountdown: '3 days'},
+            time: { currentTime: 1, day: 1, timeOfDay: 'Morning', moonStatus: 'Waning Moon', transformCountdown: '3 days'},
             stats: { health: 75, sanity: 75, bloodlust: 15, suspicion: 0 },
             brew: { brewLevel: 0, herbs: 0},
         }
@@ -157,7 +157,7 @@ export default {
   methods: {
     handleTime: function(timeObject) {
         // HandleTime is a function that takes the currentTime (which is a simple counter modified by actions), and calculates
-        // the day, time of day, and moon cycle from it. It then pushes the change to the time object for usage in the DOM.
+        // the day, time of day, and moon cycle from it. It also checks if a transformation should happen, and applies it if it does.
 
         // Calculate day
         timeObject.day = Math.ceil(timeObject.currentTime / 4)
@@ -173,7 +173,7 @@ export default {
             timeObject.timeOfDay = 'Evening'
         }
 
-        // Calculate moon and transform
+        // Calculate moon and transformCountdown
         if (timeObject.day % 4 === 0) {
             timeObject.moonStatus = 'Full Moon'
             timeObject.transformCountdown = 'Tonight'
@@ -186,6 +186,17 @@ export default {
         } else if (timeObject.day% 4 === 3) {
             timeObject.moonStatus = 'Waxing Moon'
             timeObject.transformCountdown = 'Tomorrow'
+        }
+
+        // Transformation
+        if ((timeObject.day % 4 === 0) && (timeObject.currentTime % 4 === 0)) {
+            timeObject.currentTime++
+            timeObject.moonStatus = 'Waning Moon'
+            timeObject.transformCountdown = '3 days'
+            timeObject.timeOfDay = 'Morning'
+
+            this.info.logBox.unshift("Even as you know it's coming, the transformation to a werewolf startles you. Everything goes black.")
+            this.info.logBox.unshift("You awake, uncomfortable. Hopefully you didn't kill someone...")
         }
 
         this.info.time = timeObject
@@ -224,7 +235,7 @@ export default {
         // Suspicion Handler
         if (statsObject.suspicion < 0) {
             statsObject.suspicion === 0
-        } else if (statsObject.suspicion <= 100) {
+        } else if (statsObject.suspicion >= 100) {
             statsObject.suspicion === 90
             this.info.logBox.unshift("Moments before it happens, you catch sight of the stalker following you. You manage to fight them off, killing them in the process. You know that if you don't reduce suspicion in the townsfolk, that was just the first of many.")
             timeObject.currentTime += 2
