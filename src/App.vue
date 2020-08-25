@@ -83,7 +83,7 @@
                 <!-- Gather -->
                 <div class="row">
                     <div class="col-4">
-                        <b-button squared>Icon <br /> Gather</b-button>
+                        <b-button squared @click="gather(info.time, info.brew, info.stats)">Icon <br /> Gather</b-button>
                     </div>
                     <div class="col-8">
                         Information on action
@@ -323,6 +323,14 @@ export default {
 
         this.handleTime(timeObject)
         this.handleStats(timeObject, statsObject)
+    },
+
+    gather: function(timeObject, brewObject, statsObject) {
+        console.log('gather')
+
+        this.info.stats = statsObject
+        this.info.time = timeObject
+        this.info.brew = brewObject
     },
 
     brew: function(timeObject, brewObject) {
