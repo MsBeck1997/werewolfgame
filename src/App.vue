@@ -209,36 +209,36 @@ export default {
 
         // Health Handler
         if (statsObject.health > 100) {
-            statsObject.health === 100
+            statsObject.health = 100
         } else if (statsObject.health <= 0) {
-            statsObject.health === 0
+            statsObject.health = 0
             this.info.endGame = 'disabled'
             this.info.logBox.unshift("You feel the last remaining bit of life drain from your body. At least no one will be terrorized by a monster anymore... As you die, you can't help but wonder if there was a better way than death.")
         }
 
         // Sanity Handler
         if (statsObject.sanity > 100) {
-            statsObject.sanity === 100
+            statsObject.sanity = 100
         } else if (statsObject.sanity <= 0) {
-            statsObject.sanity === 33
+            statsObject.sanity = 33
             this.info.logBox.unshift("You feel strange, moments before everything goes dark. On the brink of insanity, the curse was released, allowing destruction to commence. You feel terrible. You have to control yourself better.")
             timeObject.currentTime += 3
         }
 
         // Bloodlust Handler
         if (statsObject.bloodlust < 0) {
-            statsObject.bloodlust === 0
+            statsObject.bloodlust = 0
         } else if (statsObject.bloodlust >= 100) {
-            statsObject.bloodlust === 0
+            statsObject.bloodlust = 0
             this.info.logBox.unshift("You feel strange, moments before everything goes dark. As the hunger consumes you, the curse is released, allowing destruction to commence. You feel terrible. You have to control yourself better.")
             timeObject.currentTime += 3
         }
 
         // Suspicion Handler
         if (statsObject.suspicion < 0) {
-            statsObject.suspicion === 0
+            statsObject.suspicion = 0
         } else if (statsObject.suspicion >= 100) {
-            statsObject.suspicion === 90
+            statsObject.suspicion = 90
             this.info.logBox.unshift("Moments before it happens, you catch sight of the stalker following you. You manage to fight them off, killing them in the process. You know that if you don't reduce suspicion in the townsfolk, that was just the first of many.")
             timeObject.currentTime += 2
         }
