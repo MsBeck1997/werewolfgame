@@ -63,7 +63,7 @@
                 <!-- Church -->
                 <div class="row">
                     <div class="col-4">
-                          <b-button squared :disabled="info.endGame" @click="church(info.time)">Icon <br /> Church</b-button>
+                          <b-button squared :disabled="info.endGame" @click="church(info.time, info.stats)">Icon <br /> Church</b-button>
                     </div>
                     <div class="col-8">
                         In the morning or afternoon, attend a church service to appear normal.
@@ -280,34 +280,46 @@ export default {
           return this.diceOutput;
     },
 
-    church: function(timeObject) {
+    church: function(timeObject, statsObject) {
         // Church is an action that checks the timeOfDay to verify morning or afternoon, then rolls a dice & publishes
         // the result to logBox. Then it modifies currentTime and statChanges, storing the data.
 
         if (timeObject.timeOfDay === 'Morning' || timeObject.timeOfDay === 'Afternoon') {
           let roll = Math.floor(Math.random() * 100)
           if (roll < 11) {
-            console.log('Epic failure')
+            statsObject.sanity -= 10
+            statsObject.bloodlust += 10
+            statsObject.suspicion += 25
+
             this.diceOutput = 'Epic failure'
-            this.info.logBox.unshift("Epic failure")
+            this.info.logBox.unshift("The preacher drones on and on, doing little more than reading out loud from his book. You doze off in the pew, and awaken to dirty looks from the other churchgoers. You leave hurriedly, trying to avoid causing more damage to your reputation. ++Suspicion +Bloodlust -Sanity")
           } else if (roll < 50) {
-            console.log('Failure')
+            statsObject.sanity -= 5
+            statsObject.bloodlust += 5
+
             this.diceOutput = 'Failure'
-            this.info.logBox.unshift("Failure")
+            this.info.logBox.unshift("The whole point of attending church is to prevent the villagers from suspecting something is wrong. Sitting in the back doesn't exactly make you noticeable. +Bloodlust -Sanity")
           } else if (roll < 90) {
-            console.log('Success')
+            statsObject.sanity -= 5
+            statsObject.bloodlust += 5
+            statsObject.suspicion -= 10
+
             this.diceOutput = 'Success'
-            this.info.logBox.unshift("Success")
+            this.info.logBox.unshift("You grow weary of the standing, singing, and prayer some days. But fitting in is never entertaining. -Suspicion +Bloodlust -Sanity")
           } else if (roll < 101) {
-            console.log('Epic success')
+            statsObject.sanity += 20
+            statsObject.bloodlust -= 10
+            statsObject.suspicion -= 20
+
             this.diceOutput = 'Epic success'
-            this.info.logBox.unshift("Epic success")
+            this.info.logBox.unshift("You feel inspired by the sermon given today. You can feel the strength that hope gives you flowing though your veins. --Suspicion -Bloodlust ++Sanity")
           }
         } else {
             this.info.logBox.unshift("You think about attending church, but no services are taking place right now. You should come back when one is happening.")
         }
 
         this.handleTime(timeObject)
+        this.handleStats(timeObject, statsObject)
         return this.diceOutput;
     },
 
