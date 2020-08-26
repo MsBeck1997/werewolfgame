@@ -332,12 +332,14 @@ export default {
         if (statsObject.sanity < 25) {
             statsObject.bloodlust += 5
             statsObject.suspicion += 5
+
             this.info.logBox.unshift("You try to rest your eyes, but nightmares plague you. Sounds of death, images of fear, scents of blood seep into your dreams. You don't feel rested. You don't feel sane. +Bloodlust  +Suspicion")
         } else {
             statsObject.health += 5
             statsObject.sanity += 10
             statsObject.bloodlust += 5
             statsObject.suspicion -= 5
+
             this.info.logBox.unshift("Dreams consume you and you frolic in a better time. You awake feeling slightly better, if not slightly hungry. +Health  +Sanity  +Bloodlust  -Suspicion")
         }
 
