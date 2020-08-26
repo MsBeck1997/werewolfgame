@@ -56,7 +56,7 @@
                           <b-button squared :disabled="info.endGame" @click="hunt(info.time)">Icon <br /> Hunt</b-button>
                     </div>
                     <div class="col-8">
-                        Information on action
+                        Take to the nearby forest and attempt to find something to eat.
                     </div>
                 </div>
 
@@ -66,7 +66,7 @@
                           <b-button squared :disabled="info.endGame" @click="church(info.time)">Icon <br /> Church</b-button>
                     </div>
                     <div class="col-8">
-                        Information on action
+                        In the morning or afternoon, attend a church service to appear normal.
                     </div>
                 </div>
 
@@ -76,7 +76,7 @@
                         <b-button squared :disabled="info.endGame" @click="rest(info.time, info.stats)">Icon <br /> Rest</b-button>
                     </div>
                     <div class="col-8">
-                        Information on action
+                        Take some time to rest and recover.
                     </div>
                 </div>
 
@@ -86,7 +86,8 @@
                         <b-button squared :disabled="info.endGame" @click="gather(info.time, info.brew, info.stats)">Icon <br /> Gather</b-button>
                     </div>
                     <div class="col-8">
-                        Information on action
+                        Head into the nearby forest to search for herbs.
+                        Current Herbs: {{ info.brew.herbs }}
                     </div>
                 </div>
 
@@ -96,7 +97,7 @@
                         <b-button squared :disabled="info.endGame" @click="brew(info.brew, info.time)">Icon <br /> Brew</b-button>
                     </div>
                     <div class="col-8">
-                        Information on action
+                        Use three gathered herbs to brew potions. Potions have many effects, including curing your curse.
                     </div>
                 </div>
             </b-container>
@@ -196,8 +197,8 @@ export default {
             timeObject.transformCountdown = '3 days'
             timeObject.timeOfDay = 'Morning'
 
-            this.info.logBox.unshift("Even as you know it's coming, the transformation to a werewolf startles you. Everything goes black.")
             this.info.logBox.unshift("You awake, uncomfortable. Hopefully you didn't kill someone...")
+            this.info.logBox.unshift("Even as you know it's coming, the transformation to a werewolf startles you. Everything goes black.")
         }
 
         this.info.time = timeObject
@@ -212,7 +213,7 @@ export default {
             statsObject.health = 100
         } else if (statsObject.health <= 0) {
             statsObject.health = 0
-            this.info.endGame = 'disabled'
+            this.info.endGame = true
             this.info.logBox.unshift("You feel the last remaining bit of life drain from your body. At least no one will be terrorized by a monster anymore... As you die, you can't help but wonder if there was a better way than death.")
         }
 
@@ -230,6 +231,7 @@ export default {
             statsObject.bloodlust = 0
         } else if (statsObject.bloodlust >= 100) {
             statsObject.bloodlust = 0
+            statsObject.sanity -= 20
             this.info.logBox.unshift("You feel strange, moments before everything goes dark. As the hunger consumes you, the curse is released, allowing destruction to commence. You feel terrible. You have to control yourself better.")
             timeObject.currentTime += 3
         }
@@ -239,6 +241,8 @@ export default {
             statsObject.suspicion = 0
         } else if (statsObject.suspicion >= 100) {
             statsObject.suspicion = 90
+            statsObject.bloodlust -= 20
+            statsObject.sanity -= 20
             this.info.logBox.unshift("Moments before it happens, you catch sight of the stalker following you. You manage to fight them off, killing them in the process. You know that if you don't reduce suspicion in the townsfolk, that was just the first of many.")
             timeObject.currentTime += 2
         }
@@ -314,6 +318,8 @@ export default {
         timeObject.currentTime++
 
         if (statsObject.sanity < 25) {
+            statsObject.bloodlust += 5
+            statsObject.suspicion += 5
             this.info.logBox.unshift("You try to rest your eyes, but nightmares plague you. Sounds of death, images of fear, scents of blood seep into your dreams. You don't feel rested. You don't feel sane.")
         } else {
             statsObject.health += 5
