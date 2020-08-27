@@ -53,7 +53,7 @@
                 <!-- Hunt -->
                 <div class="row">
                     <div class="col-4">
-                          <b-button squared :disabled="info.endGame" @click="hunt(info.time)">Icon <br /> Hunt</b-button>
+                          <b-button squared :disabled="info.endGame" @click="hunt(info.time, info.stats)">Icon <br /> Hunt</b-button>
                     </div>
                     <div class="col-8">
                         Take to the nearby forest and attempt to find something to eat.
@@ -197,8 +197,8 @@ export default {
             timeObject.transformCountdown = '3 days'
             timeObject.timeOfDay = 'Morning'
 
-            this.info.logBox.unshift("You awake, uncomfortable. Hopefully you didn't kill someone...")
             this.info.logBox.unshift("Even as you know it's coming, the transformation to a werewolf startles you. Everything goes black.")
+            this.info.logBox.unshift("You awake, uncomfortable. Hopefully you didn't kill someone...")
         }
 
         this.info.time = timeObject
@@ -251,7 +251,7 @@ export default {
         this.info.time = timeObject
     },
 
-    hunt: function(timeObject) {
+    hunt: function(timeObject, statsObject) {
         // Hunt is an action that rolls a dice, publishes the result to the logBox, and modifies the currentTime and stats in data.
 
         // Update time in statusBar
@@ -259,24 +259,50 @@ export default {
 
         let roll = Math.floor(Math.random() * 100)
           if (roll < 11) {
-            console.log('Epic failure')
+            statsObject.sanity -= 10
+            statsObject.bloodlust += 20
+            statsObject.suspicion += 20
             this.diceOutput = 'Epic failure'
-            this.info.logBox.unshift("Epic failure")
-          } else if (roll < 50) {
-            console.log('Failure')
+
+            this.info.logBox.unshift("You take down a deer, but before you can dig in, you hear a scream from the bushes. You take off after whoever saw you, but you lost both them and the deer. Frustrated and still hungry, you head back to town. ++Suspicion ++Bloodlust -Sanity")
+           } else if (roll < 40) {
+            statsObject.sanity -= 10
+            statsObject.bloodlust += 5
+            statsObject.suspicion += 5
             this.diceOutput = 'Failure'
-            this.info.logBox.unshift("Failure")
-          } else if (roll < 90) {
-            console.log('Success')
+
+            this.info.logBox.unshift("Irritated, you return home empty handed. What a waste of time. On the way, you notice another hunter glancing at you with fear in his eyes. Did he see something he shouldn't have...?  +Bloodlust -Sanity +Suspicion")
+          } else if (roll < 50) {
+            statsObject.health -= 10
+            statsObject.bloodlust += 5
+            this.diceOutput = 'Minor failure'
+
+            this.info.logBox.unshift("The stag you were following almost got away. Luckily, you were faster. Unluckily, it managed to gore you when it fought back. -Health -Bloodlust")
+          } else if (roll < 80) {
+            statsObject.health += 10
+            statsObject.bloodlust -= 10
             this.diceOutput = 'Success'
-            this.info.logBox.unshift("Success")
+
+            this.info.logBox.unshift("You took down a beautiful stag. It was delicious. --Bloodlust +Health")
+          } else if (roll < 90) {
+            statsObject.health += 10
+            statsObject.sanity -= 5
+            statsObject.bloodlust -= 15
+            this.diceOutput = 'Major Success'
+
+            this.info.logBox.unshift("While hunting, you come across something that smells amazing. You follow it with a single-mindedness that borders obsession. Who knew mountain lions were so delectable? +Health --Bloodlust -Sanity")
           } else if (roll < 101) {
-            console.log('Epic success')
+            statsObject.health += 5
+            statsObject.sanity += 10
+            statsObject.bloodlust -= 20
+            statsObject.suspicion -= 5
             this.diceOutput = 'Epic success'
+
             this.info.logBox.unshift("Epic success")
           }
 
           this.handleTime(timeObject)
+          this.handleStats(timeObject, statsObject)
           return this.diceOutput;
     },
 
@@ -384,6 +410,8 @@ export default {
     brew: function(timeObject, brewObject) {
         // Brew is an action that checks if your inventory has enough herbs to brew (>=3), then uses your brewing level
         // to roll a dice & publish the result to the logBox. Finally, it modifies the currentTime and stats in data.
+        // Brewing is a level based system, that has a chance to move up a level to unlock better potions. The top level
+        // is the cure. This prevents random win in 1st try, and still allows for randomness
 
         if (this.info.brew.herbs >= 3) {
             if (this.info.brew.brewLevel === 0) {
