@@ -86,7 +86,7 @@
                         <b-button squared :disabled="info.endGame" @click="gather(info.time, info.brew, info.stats)">Icon <br /> Gather</b-button>
                     </div>
                     <div class="col-8">
-                        Head into the nearby forest to search for herbs.
+                        Head into the nearby forest to search for herbs. Takes two hours. <br />
                         Current Herbs: {{ info.brew.herbs }}
                     </div>
                 </div>
@@ -381,24 +381,27 @@ export default {
       // Gather is an action that rolls a dice, publishes the result to the logBox, and modifies the currentTime and stats in data.
       // If successful, it adds herbs to brewObject.
 
-      timeObject.currentTime++
+      timeObject.currentTime += 2
 
       let roll = Math.floor(Math.random() * 100)
         if (roll < 11) {
           this.diceOutput = 'Epic failure'
-          this.info.logBox.unshift("Epic failure")
+          this.info.logBox.unshift("On your way back from collecting, you notice one of the herbs has a funny look. You recognize it as poisonous. You paw through the rest of the herbs, but have trouble differentiating between safe and non-safe. You toss them all to be safe.")
         } else if (roll < 50) {
           this.diceOutput = 'Failure'
-          this.info.logBox.unshift("Failure")
+          this.info.logBox.unshift("Bad luck. Irritated, you head back empty handed.")
         } else if (roll < 90) {
+          brewObject.herbs++
           this.diceOutput = 'Success'
-          this.info.logBox.unshift("Success")
+          this.info.logBox.unshift("You found some herbs along a bank, and brought them back. +1 herb")
         } else if (roll < 101) {
+          brewObject.herbs += 2
           this.diceOutput = 'Epic success'
-          this.info.logBox.unshift("Epic success")
+          this.info.logBox.unshift("The gods must be smiling upon you today, as you had great luck collecting. +2 herbs")
         }
 
         this.handleTime(timeObject)
+        this.handleStats(timeObject, statsObject)
 
         this.info.stats = statsObject
         this.info.time = timeObject
