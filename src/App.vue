@@ -430,27 +430,85 @@ export default {
                 this.info.logBox.unshift("Success")
               } else if (roll < 101) {
                 this.diceOutput = 'Epic success'
+                this.brewObject.brewLevel++
                 this.info.logBox.unshift("Epic success")
               }
             } else if (this.info.brew.brewLevel === 1) {
               let roll = Math.floor(Math.random() * 100)
               if (roll < 11) {
-                console.log('Epic failure')
                 this.diceOutput = 'Epic failure'
                 this.info.logBox.unshift("Epic failure")
               } else if (roll < 50) {
-                console.log('Failure')
                 this.diceOutput = 'Failure'
                 this.info.logBox.unshift("Failure")
               } else if (roll < 90) {
-                console.log('Success')
                 this.diceOutput = 'Success'
                 this.info.logBox.unshift("Success")
               } else if (roll < 101) {
-                console.log('Epic success')
+                this.brewObject.brewLevel++
                 this.diceOutput = 'Epic success'
                 this.info.logBox.unshift("Epic success")
               }
+            } else if (this.info.brew.brewLevel === 2) {
+              let roll = Math.floor(Math.random() * 100)
+              if (roll < 11) {
+                this.diceOutput = 'Epic failure'
+                this.info.logBox.unshift("Epic failure")
+              } else if (roll < 50) {
+                this.diceOutput = 'Failure'
+                this.info.logBox.unshift("Failure")
+              } else if (roll < 90) {
+                this.diceOutput = 'Success'
+                this.info.logBox.unshift("Success")
+              } else if (roll < 101) {
+                this.brewObject.brewLevel++
+                this.diceOutput = 'Epic success'
+                this.info.logBox.unshift("Epic success")
+            } else if (this.info.brew.brewLevel === 3) {
+              let roll = Math.floor(Math.random() * 100)
+              if (roll < 11) {
+                this.diceOutput = 'Epic failure'
+                this.info.logBox.unshift("Epic failure")
+              } else if (roll < 50) {
+                this.diceOutput = 'Failure'
+                this.info.logBox.unshift("Failure")
+              } else if (roll < 90) {
+                this.diceOutput = 'Success'
+                this.info.logBox.unshift("Success")
+              } else if (roll < 101) {
+                this.brewObject.brewLevel++
+                this.diceOutput = 'Epic success'
+                this.info.logBox.unshift("Epic success")
+            } else if (this.info.brew.brewLevel === 4) {
+              let roll = Math.floor(Math.random() * 100)
+              if (roll < 11) {
+                this.diceOutput = 'Epic failure'
+                this.info.logBox.unshift("Epic failure")
+              } else if (roll < 50) {
+                this.diceOutput = 'Failure'
+                this.info.logBox.unshift("Failure")
+              } else if (roll < 90) {
+                this.diceOutput = 'Success'
+                this.info.logBox.unshift("Success")
+              } else if (roll < 101) {
+                this.brewObject.brewLevel++
+                this.diceOutput = 'Epic success'
+                this.info.logBox.unshift("Epic success")
+            } else if (this.info.brew.brewLevel === 5) {
+              let roll = Math.floor(Math.random() * 100)
+              if (roll < 11) {
+                this.diceOutput = 'Epic failure'
+                this.info.logBox.unshift("Epic failure")
+              } else if (roll < 50) {
+                this.diceOutput = 'Failure'
+                this.info.logBox.unshift("Failure")
+              } else if (roll < 90) {
+                this.diceOutput = 'Success'
+                this.info.logBox.unshift("Success")
+              } else if (roll < 101) {
+                this.brewObject.brewLevel++
+                this.diceOutput = 'Epic success'
+                this.info.logBox.unshift("Epic success")
             }
 
         } else {
