@@ -464,6 +464,7 @@ export default {
                 this.brewObject.brewLevel++
                 this.diceOutput = 'Epic success'
                 this.info.logBox.unshift("Epic success")
+              }
             } else if (this.info.brew.brewLevel === 3) {
               let roll = Math.floor(Math.random() * 100)
               if (roll < 11) {
@@ -479,6 +480,7 @@ export default {
                 this.brewObject.brewLevel++
                 this.diceOutput = 'Epic success'
                 this.info.logBox.unshift("Epic success")
+              }
             } else if (this.info.brew.brewLevel === 4) {
               let roll = Math.floor(Math.random() * 100)
               if (roll < 11) {
@@ -494,6 +496,7 @@ export default {
                 this.brewObject.brewLevel++
                 this.diceOutput = 'Epic success'
                 this.info.logBox.unshift("Epic success")
+              }
             } else if (this.info.brew.brewLevel === 5) {
               let roll = Math.floor(Math.random() * 100)
               if (roll < 11) {
@@ -509,6 +512,7 @@ export default {
                 this.brewObject.brewLevel++
                 this.diceOutput = 'Epic success'
                 this.info.logBox.unshift("Epic success")
+              }
             }
 
         } else {
