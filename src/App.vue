@@ -94,7 +94,7 @@
                 <!-- Brew -->
                 <div class="row">
                     <div class="col-4">
-                        <b-button squared :disabled="info.endGame" @click="brew(info.brew, info.time, info.stats)">Icon <br /> Brew</b-button>
+                        <b-button squared :disabled="info.endGame" @click="brew(info.time, info.brew, info.stats)">Icon <br /> Brew</b-button>
                     </div>
                     <div class="col-8">
                         Use three gathered herbs to brew potions. Potions have many effects, including curing your curse.
@@ -108,10 +108,11 @@
 
             <!-- Log Box -->
             <section>
-                {{ info.currentTime }}
                 <div class="border border-secondary">
-                    {{ info.diceOutput }}
-                    <br /> <br />
+                    {{ info.logBox[0] }}
+                </div>
+
+                <div class="border border-secondary">
                     <ul>
                         <li v-for="(message,index) in info.logBox" :key="index">
                             {{ message }}
