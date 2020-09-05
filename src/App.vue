@@ -316,6 +316,7 @@ export default {
 
         if (timeObject.timeOfDay === 'Morning' || timeObject.timeOfDay === 'Afternoon') {
           let roll = Math.floor(Math.random() * 100)
+          timeObject.currentTime += 2
           if (roll < 11) {
             statsObject.sanity -= 10
             statsObject.bloodlust += 10
