@@ -109,12 +109,8 @@
             <!-- Log Box -->
             <section>
                 <div class="border border-secondary">
-                    {{ info.logBox[0] }}
-                </div>
-
-                <div class="border border-secondary">
                     <ul>
-                        <li v-for="(message,index) in info.logBox" :key="index">
+                        <li class="logBoxList" v-for="(message,index) in info.logBox" :key="index">
                             {{ message }}
                         </li>
                     </ul>
@@ -153,6 +149,14 @@ export default {
             stats: { health: 75, sanity: 75, bloodlust: 15, suspicion: 0 },
             brew: { brewLevel: 0, herbs: 0},
             endGame: false,
+        },
+        logOutput: {
+            transformation: { moonChange: "transform on moon", healthChange: "transform on health", },
+            hunt: { EpicSuccess: "testing hunt"},
+            church: { EpicSuccess: "testing church"},
+            rest: { Success: ["testing rest", "testing 2", "testing 3"] },
+            gather: { EpicSuccess: "testing gather"},
+            brew: { EpicSuccess: "testing brew"}
         }
     }
   },
@@ -372,7 +376,8 @@ export default {
             statsObject.bloodlust += 5
             statsObject.suspicion -= 5
 
-            this.info.logBox.unshift("Dreams consume you and you frolic in a better time. You awake feeling slightly better, if not slightly hungry. +Health  +Sanity  +Bloodlust  -Suspicion")
+            // this.info.logBox.unshift("Dreams consume you and you frolic in a better time. You awake feeling slightly better, if not slightly hungry. +Health  +Sanity  +Bloodlust  -Suspicion")
+            this.info.logBox.unshift(this.logOutput.rest[0])
         }
 
         this.handleTime(timeObject)
@@ -462,13 +467,15 @@ export default {
               let roll = Math.floor(Math.random() * 100)
               brewObject.herbs -= 3
               if (roll < 11) {
-                statsObject.health += 5
-                statsObject.sanity += 10
-                statsObject.bloodlust += 5
-                statsObject.suspicion -= 5
+                timeObject.currentTime++
+
+                statsObject.health -= 20
+                statsObject.sanity -= 10
+                statsObject.bloodlust += 10
+                statsObject.suspicion += 10
 
                 this.diceOutput = 'Epic failure'
-                this.info.logBox.unshift("Epic failure")
+                this.info.logBox.unshift("That potion wasn't right. Wasn't right at all. --Health -Sanity +Bloodlust +Suspicion")
               } else if (roll < 50) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -500,13 +507,15 @@ export default {
               let roll = Math.floor(Math.random() * 100)
               brewObject.herbs -= 3
               if (roll < 11) {
-                statsObject.health += 5
-                statsObject.sanity += 10
-                statsObject.bloodlust += 5
-                statsObject.suspicion -= 5
+                timeObject.currentTime++
+
+                statsObject.health -= 20
+                statsObject.sanity -= 10
+                statsObject.bloodlust += 10
+                statsObject.suspicion += 10
 
                 this.diceOutput = 'Epic failure'
-                this.info.logBox.unshift("Epic failure")
+                this.info.logBox.unshift("That potion wasn't right. Wasn't right at all. --Health -Sanity +Bloodlust +Suspicion")
               } else if (roll < 50) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -538,13 +547,15 @@ export default {
               let roll = Math.floor(Math.random() * 100)
               brewObject.herbs -= 3
               if (roll < 11) {
-                statsObject.health += 5
-                statsObject.sanity += 10
-                statsObject.bloodlust += 5
-                statsObject.suspicion -= 5
+                timeObject.currentTime++
+
+                statsObject.health -= 20
+                statsObject.sanity -= 10
+                statsObject.bloodlust += 10
+                statsObject.suspicion += 10
 
                 this.diceOutput = 'Epic failure'
-                this.info.logBox.unshift("Epic failure")
+                this.info.logBox.unshift("That potion wasn't right. Wasn't right at all. --Health -Sanity +Bloodlust +Suspicion")
               } else if (roll < 50) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -576,13 +587,15 @@ export default {
               let roll = Math.floor(Math.random() * 100)
               brewObject.herbs -= 3
               if (roll < 11) {
-                statsObject.health += 5
-                statsObject.sanity += 10
-                statsObject.bloodlust += 5
-                statsObject.suspicion -= 5
+                timeObject.currentTime++
+
+                statsObject.health -= 20
+                statsObject.sanity -= 10
+                statsObject.bloodlust += 10
+                statsObject.suspicion += 10
 
                 this.diceOutput = 'Epic failure'
-                this.info.logBox.unshift("Epic failure")
+                this.info.logBox.unshift("That potion wasn't right. Wasn't right at all. --Health -Sanity +Bloodlust +Suspicion")
               } else if (roll < 50) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -614,13 +627,15 @@ export default {
               let roll = Math.floor(Math.random() * 100)
               brewObject.herbs -= 3
               if (roll < 11) {
-                statsObject.health += 5
-                statsObject.sanity += 10
-                statsObject.bloodlust += 5
-                statsObject.suspicion -= 5
+                timeObject.currentTime++
+
+                statsObject.health -= 20
+                statsObject.sanity -= 10
+                statsObject.bloodlust += 10
+                statsObject.suspicion += 10
 
                 this.diceOutput = 'Epic failure'
-                this.info.logBox.unshift("Epic failure")
+                this.info.logBox.unshift("That potion wasn't right. Wasn't right at all. --Health -Sanity +Bloodlust +Suspicion")
               } else if (roll < 50) {
                 statsObject.health += 5
                 statsObject.sanity += 10
