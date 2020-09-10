@@ -151,11 +151,11 @@ export default {
             endGame: false,
         },
         logOutput: {
-            transformation: { moonChange: "transform on moon",
-                              healthChange: "transform on health",
-                              sanityChange: "",
-                              bloodlustChange: "",
-                              suspicionChange: "" },
+            transformation: { moonChange: "Even as you know it's coming, the transformation to a werewolf startles you. Everything goes black. \n You awake, uncomfortable. Hopefully you didn't kill someone...",
+                              healthChange: "You feel the last remaining bit of life drain from your body. At least no one will be terrorized by a monster anymore... As you die, you can't help but wonder if there was a better way than death.",
+                              sanityChange: "You feel strange, moments before everything goes dark. On the brink of insanity, the curse was released, allowing destruction to commence. You feel terrible. You have to control yourself better.",
+                              bloodlustChange: "You feel strange, moments before everything goes dark. As the hunger consumes you, the curse is released, allowing destruction to commence. You feel terrible. You have to control yourself better.",
+                              suspicionChange: "Moments before it happens, you catch sight of the stalker following you. You manage to fight them off, killing them in the process. You know that if you don't reduce suspicion in the townsfolk, that was just the first of many." },
             hunt: { EpicSuccess: "",
                     Success: "",
                     Failure: "",
@@ -240,8 +240,7 @@ export default {
             timeObject.transformCountdown = '3 days'
             timeObject.timeOfDay = 'Morning'
 
-            this.info.logBox.unshift("Even as you know it's coming, the transformation to a werewolf startles you. Everything goes black.")
-            this.info.logBox.unshift("You awake, uncomfortable. Hopefully you didn't kill someone...")
+            this.info.logBox.unshift(this.logOutput.transformation.moonChange)
         }
 
         this.info.time = timeObject
@@ -257,7 +256,7 @@ export default {
         } else if (statsObject.health <= 0) {
             statsObject.health = 0
             this.info.endGame = true
-            this.info.logBox.unshift("You feel the last remaining bit of life drain from your body. At least no one will be terrorized by a monster anymore... As you die, you can't help but wonder if there was a better way than death.")
+            this.info.logBox.unshift(this.logOutput.transformation.healthChange)
         }
 
         // Sanity Handler
@@ -265,7 +264,7 @@ export default {
             statsObject.sanity = 100
         } else if (statsObject.sanity <= 0) {
             statsObject.sanity = 33
-            this.info.logBox.unshift("You feel strange, moments before everything goes dark. On the brink of insanity, the curse was released, allowing destruction to commence. You feel terrible. You have to control yourself better.")
+            this.info.logBox.unshift(this.logOutput.transformation.sanityChange)
             timeObject.currentTime += 3
         }
 
@@ -275,7 +274,7 @@ export default {
         } else if (statsObject.bloodlust >= 100) {
             statsObject.bloodlust = 0
             statsObject.sanity -= 20
-            this.info.logBox.unshift("You feel strange, moments before everything goes dark. As the hunger consumes you, the curse is released, allowing destruction to commence. You feel terrible. You have to control yourself better.")
+            this.info.logBox.unshift(this.logOutput.transformation.bloodlustChange)
             timeObject.currentTime += 3
         }
 
@@ -286,7 +285,7 @@ export default {
             statsObject.suspicion = 90
             statsObject.bloodlust -= 20
             statsObject.sanity -= 20
-            this.info.logBox.unshift("Moments before it happens, you catch sight of the stalker following you. You manage to fight them off, killing them in the process. You know that if you don't reduce suspicion in the townsfolk, that was just the first of many.")
+            this.info.logBox.unshift(this.logOutput.transformation.suspicionChange)
             timeObject.currentTime += 2
         }
 
