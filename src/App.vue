@@ -156,16 +156,18 @@ export default {
                               sanityChange: "You feel strange, moments before everything goes dark. On the brink of insanity, the curse was released, allowing destruction to commence. You feel terrible. You have to control yourself better.",
                               bloodlustChange: "You feel strange, moments before everything goes dark. As the hunger consumes you, the curse is released, allowing destruction to commence. You feel terrible. You have to control yourself better.",
                               suspicionChange: "Moments before it happens, you catch sight of the stalker following you. You manage to fight them off, killing them in the process. You know that if you don't reduce suspicion in the townsfolk, that was just the first of many." },
-            hunt: { EpicSuccess: "",
-                    Success: "",
-                    Failure: "",
-                    EpicFailure: "" },
+            hunt: { EpicSuccess: "Not only does the hunt go amazing, but you end up having extra. You share your excess with the townsfolk, who are extremely grateful. +Health --Bloodlust +Sanity -Suspicion",
+                    MajorSuccess: "While hunting, you come across something that smells amazing. You follow it with a single-mindedness that borders obsession. Who knew mountain lions were so delectable? +Health --Bloodlust -Sanity",
+                    Success: "You took down a beautiful stag. It was delicious. --Bloodlust +Health",
+                    MinorFailure: "The stag you were following almost got away. Luckily, you were faster. Unluckily, it managed to gore you when it fought back. -Health -Bloodlust",
+                    Failure: "Irritated, you return home empty handed. What a waste of time. On the way, you notice another hunter glancing at you with fear in his eyes. Did he see something he shouldn't have...?  +Bloodlust -Sanity +Suspicion",
+                    EpicFailure: "You take down a deer, but before you can dig in, you hear a scream from the bushes. You take off after whoever saw you, but you lost both them and the deer. Frustrated and still hungry, you head back to town. ++Suspicion ++Bloodlust -Sanity" },
             church: { EpicSuccess: "You feel inspired by the sermon given today. You can feel the strength that hope gives you flowing though your veins. --Suspicion -Bloodlust ++Sanity",
                     Success: "You grow weary of the standing, singing, and prayer some days. But fitting in is never entertaining. -Suspicion +Bloodlust -Sanity",
                     Failure: "The whole point of attending church is to prevent the villagers from suspecting something is wrong. Sitting in the back doesn't exactly make you noticeable. +Bloodlust -Sanity",
                     EpicFailure: "The preacher drones on and on, doing little more than reading out loud from his book. You doze off in the pew, and awaken to dirty looks from the other churchgoers. You leave hurriedly, trying to avoid causing more damage to your reputation. ++Suspicion +Bloodlust -Sanity",
                     Unavailable: "You think about attending church, but no services are taking place right now. You should come back when one is happening." },
-            rest: { Success: "test",
+            rest: { Success: "Resting tames the beast, at least a little. You feel refreshed, if not a little hungry. +Bloodlust -Suspicion +Health +Sanity",
                     Failure: "You try to rest your eyes, but nightmares plague you. Sounds of death, images of fear, scents of blood seep into your dreams. You don't feel rested. You don't feel sane. +Bloodlust  +Suspicion", },
             gather: { EpicSuccess: "",
                     Success: "",
@@ -308,26 +310,26 @@ export default {
             statsObject.suspicion += 20
             this.diceOutput = 'Epic failure'
 
-            this.info.logBox.unshift("You take down a deer, but before you can dig in, you hear a scream from the bushes. You take off after whoever saw you, but you lost both them and the deer. Frustrated and still hungry, you head back to town. ++Suspicion ++Bloodlust -Sanity")
+            this.info.logBox.unshift(this.logOutput.hunt.EpicFailure)
            } else if (roll < 40) {
             statsObject.sanity -= 10
             statsObject.bloodlust += 5
             statsObject.suspicion += 5
             this.diceOutput = 'Failure'
 
-            this.info.logBox.unshift("Irritated, you return home empty handed. What a waste of time. On the way, you notice another hunter glancing at you with fear in his eyes. Did he see something he shouldn't have...?  +Bloodlust -Sanity +Suspicion")
+            this.info.logBox.unshift(this.logOutput.hunt.Failure)
           } else if (roll < 50) {
             statsObject.health -= 10
             statsObject.bloodlust += 5
             this.diceOutput = 'Minor failure'
 
-            this.info.logBox.unshift("The stag you were following almost got away. Luckily, you were faster. Unluckily, it managed to gore you when it fought back. -Health -Bloodlust")
+            this.info.logBox.unshift(this.logOutput.hunt.MinorFailure)
           } else if (roll < 80) {
             statsObject.health += 10
             statsObject.bloodlust -= 10
             this.diceOutput = 'Success'
 
-            this.info.logBox.unshift("You took down a beautiful stag. It was delicious. --Bloodlust +Health")
+            this.info.logBox.unshift(this.logOutput.hunt.Success)
           } else if (roll < 90) {
             timeObject.currentTime++
 
@@ -336,7 +338,7 @@ export default {
             statsObject.bloodlust -= 15
             this.diceOutput = 'Major Success'
 
-            this.info.logBox.unshift("While hunting, you come across something that smells amazing. You follow it with a single-mindedness that borders obsession. Who knew mountain lions were so delectable? +Health --Bloodlust -Sanity")
+            this.info.logBox.unshift(this.logOutput.hunt.MajorSuccess)
           } else if (roll < 101) {
             statsObject.health += 10
             statsObject.sanity += 5
@@ -344,7 +346,7 @@ export default {
             statsObject.suspicion -= 5
             this.diceOutput = 'Epic success'
 
-            this.info.logBox.unshift("Not only does the hunt go amazing, but you end up having extra. You share your excess with the townsfolk, who are extremely grateful. +Health --Bloodlust +Sanity -Suspicion")
+            this.info.logBox.unshift(this.info.logOutput.hunt.EpicSuccess)
           }
 
           this.handleTime(timeObject)
