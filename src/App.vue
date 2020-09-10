@@ -173,30 +173,31 @@ export default {
                     Success: "You found some herbs along a bank, and brought them back. +1 herb",
                     Failure: "Bad luck. Irritated, you head back empty handed.",
                     EpicFailure: "On your way back from collecting, you notice one of the herbs has a funny look. You recognize it as poisonous. You paw through the rest of the herbs, but have trouble differentiating between safe and non-safe. You toss them all to be safe." },
-            brew: { level0: { EpicSuccess: "",
-                              Success: "",
-                              Failure: "",
-                              EpicFailure: "" },
-                    level1: { EpicSuccess: "",
-                              Success: "",
-                              Failure: "",
-                              EpicFailure: "" },
-                    level2: { EpicSuccess: "",
-                              Success: "",
-                              Failure: "",
-                              EpicFailure: "" },
-                    level3: { EpicSuccess: "",
-                              Success: "",
-                              Failure: "",
-                              EpicFailure: "" },
-                    level4: { EpicSuccess: "",
-                              Success: "",
-                              Failure: "",
-                              EpicFailure: "" },
-                    level5: { EpicSuccess: "",
-                              Success: "",
-                              Failure: "",
-                              EpicFailure: "" } },
+            brew: { unable: "You consider brewing something, but realize you don't have enough supplies to do so. Maybe you should try your luck gathering some herbs.",
+                    level0: { EpicSuccess: "You tried something new today - and it worked! You think you understand how to actually brew them now. +Health +Sanity -Bloodlust",
+                              Success: "Combining a few herbs together usually doesn't have much to show for it, but that one worked! +Health +Sanity -Bloodlust",
+                              Failure: "You're not quite sure which herbs do what. You tried mixing a few together into a potion. Nothing seemed to happen. -Sanity",
+                              EpicFailure: "That potion wasn't right. Wasn't right at all. --Health -Sanity +Bloodlust +Suspicion" },
+                    level1: { EpicSuccess: "You tried something new today - and it worked! You think you understand how to actually brew them better.",
+                              Success: "Combining a few herbs together usually doesn't have much to show for it, but that one worked! +Health +Sanity -Bloodlust",
+                              Failure: "You're not quite sure which herbs do what. You tried mixing a few together into a potion. Nothing seemed to happen. -Sanity",
+                              EpicFailure: "That potion wasn't right. Wasn't right at all. --Health -Sanity +Bloodlust +Suspicion" },
+                    level2: { EpicSuccess: "You tried something new today - and it worked! You think you understand how to actually brew them better.",
+                              Success: "Combining a few herbs together usually doesn't have much to show for it, but that one worked! +Health +Sanity -Bloodlust",
+                              Failure: "You're not quite sure which herbs do what. You tried mixing a few together into a potion. Nothing seemed to happen. -Sanity",
+                              EpicFailure: "That potion wasn't right. Wasn't right at all. --Health -Sanity +Bloodlust +Suspicion" },
+                    level3: { EpicSuccess: "You tried something new today - and it worked! You think you understand how to actually brew them better.",
+                              Success: "Combining a few herbs together usually doesn't have much to show for it, but that one worked! +Health +Sanity -Bloodlust",
+                              Failure: "You're not quite sure which herbs do what. You tried mixing a few together into a potion. Nothing seemed to happen. -Sanity",
+                              EpicFailure: "That potion wasn't right. Wasn't right at all. --Health -Sanity +Bloodlust +Suspicion" },
+                    level4: { EpicSuccess: "You tried something new today - and it worked! You think you understand how to actually brew them better.",
+                              Success: "Combining a few herbs together usually doesn't have much to show for it, but that one worked! +Health +Sanity -Bloodlust",
+                              Failure: "You're not quite sure which herbs do what. You tried mixing a few together into a potion. Nothing seemed to happen. -Sanity",
+                              EpicFailure: "That potion wasn't right. Wasn't right at all. --Health -Sanity +Bloodlust +Suspicion" },
+                    level5: { EpicSuccess: "Hope rushing through you, you drink the potion. A rush of power flows through you, and you know you did it. No more will you be plauged by the curse of the wolf.",
+                              Success: "Combining a few herbs together usually doesn't have much to show for it, but that one worked! +Health +Sanity -Bloodlust",
+                              Failure: "You're not quite sure which herbs do what. You tried mixing a few together into a potion. Nothing seemed to happen. -Sanity",
+                              EpicFailure: "That potion wasn't right. Wasn't right at all. --Health -Sanity +Bloodlust +Suspicion" } },
         }
     }
   },
@@ -477,19 +478,19 @@ export default {
                 statsObject.suspicion += 10
 
                 this.diceOutput = 'Epic failure'
-                this.info.logBox.unshift("That potion wasn't right. Wasn't right at all. --Health -Sanity +Bloodlust +Suspicion")
+                this.info.logBox.unshift(this.logOutput.brew.level0.EpicFailure)
               } else if (roll < 50) {
                 statsObject.sanity -= 5
 
                 this.diceOutput = 'Failure'
-                this.info.logBox.unshift("You're not quite sure which herbs do what. You tried mixing a few together into a potion. Nothing seemed to happen. -Sanity")
+                this.info.logBox.unshift(this.logOutput.brew.level0.Failure)
               } else if (roll < 90) {
                 statsObject.health += 5
                 statsObject.sanity += 10
                 statsObject.bloodlust -= 5
 
                 this.diceOutput = 'Success'
-                this.info.logBox.unshift("Combining a few herbs together usually doesn't have much to show for it, but that one worked! +Health +Sanity -Bloodlust")
+                this.info.logBox.unshift(this.logOutput.brew.level0.Success)
               } else if (roll < 101) {
                 timeObject.currentTime++
 
@@ -499,7 +500,7 @@ export default {
 
                 this.diceOutput = 'Epic success'
                 this.brewObject.brewLevel++
-                this.info.logBox.unshift("You tried something new today - and it worked! You think you understand how to actually brew them now. +Health +Sanity -Bloodlust")
+                this.info.logBox.unshift(this.logOutput.brew.level0.EpicSuccess)
               }
 
             } else if (this.info.brew.brewLevel === 1) {
@@ -514,7 +515,7 @@ export default {
                 statsObject.suspicion += 10
 
                 this.diceOutput = 'Epic failure'
-                this.info.logBox.unshift("That potion wasn't right. Wasn't right at all. --Health -Sanity +Bloodlust +Suspicion")
+                this.info.logBox.unshift(this.logOutput.brew.level1.EpicFailure)
               } else if (roll < 50) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -522,7 +523,7 @@ export default {
                 statsObject.suspicion -= 5
 
                 this.diceOutput = 'Failure'
-                this.info.logBox.unshift("Failure")
+                this.info.logBox.unshift(this.logOutput.brew.level1.Failure)
               } else if (roll < 90) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -530,7 +531,7 @@ export default {
                 statsObject.suspicion -= 5
 
                 this.diceOutput = 'Success'
-                this.info.logBox.unshift("Success")
+                this.info.logBox.unshift(this.logOutput.brew.level1.Success)
               } else if (roll < 101) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -539,7 +540,7 @@ export default {
 
                 this.brewObject.brewLevel++
                 this.diceOutput = 'Epic success'
-                this.info.logBox.unshift("You tried something new today - and it worked! You think you understand how to actually brew them better.")
+                this.info.logBox.unshift(this.logOutput.brew.level1.EpicSuccess)
               }
 
             } else if (this.info.brew.brewLevel === 2) {
@@ -554,7 +555,7 @@ export default {
                 statsObject.suspicion += 10
 
                 this.diceOutput = 'Epic failure'
-                this.info.logBox.unshift("That potion wasn't right. Wasn't right at all. --Health -Sanity +Bloodlust +Suspicion")
+                this.info.logBox.unshift(this.logOutput.brew.level2.EpicFailure)
               } else if (roll < 50) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -562,7 +563,7 @@ export default {
                 statsObject.suspicion -= 5
 
                 this.diceOutput = 'Failure'
-                this.info.logBox.unshift("Failure")
+                this.info.logBox.unshift(this.logOutput.brew.level2.Failure)
               } else if (roll < 90) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -570,7 +571,7 @@ export default {
                 statsObject.suspicion -= 5
 
                 this.diceOutput = 'Success'
-                this.info.logBox.unshift("Success")
+                this.info.logBox.unshift(this.logOutput.brew.level2.Success)
               } else if (roll < 101) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -579,7 +580,7 @@ export default {
 
                 this.brewObject.brewLevel++
                 this.diceOutput = 'Epic success'
-                this.info.logBox.unshift("You tried something new today - and it worked! You think you understand how to actually brew them better.")
+                this.info.logBox.unshift(this.logOutput.brew.level2.EpicSuccess)
               }
 
             } else if (this.info.brew.brewLevel === 3) {
@@ -594,7 +595,7 @@ export default {
                 statsObject.suspicion += 10
 
                 this.diceOutput = 'Epic failure'
-                this.info.logBox.unshift("That potion wasn't right. Wasn't right at all. --Health -Sanity +Bloodlust +Suspicion")
+                this.info.logBox.unshift(this.logOutput.brew.level3.EpicFailure)
               } else if (roll < 50) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -602,7 +603,7 @@ export default {
                 statsObject.suspicion -= 5
 
                 this.diceOutput = 'Failure'
-                this.info.logBox.unshift("Failure")
+                this.info.logBox.unshift(this.logOutput.brew.level3.Failure)
               } else if (roll < 90) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -610,7 +611,7 @@ export default {
                 statsObject.suspicion -= 5
 
                 this.diceOutput = 'Success'
-                this.info.logBox.unshift("Success")
+                this.info.logBox.unshift(this.logOutput.brew.level3.Success)
               } else if (roll < 101) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -619,7 +620,7 @@ export default {
 
                 this.brewObject.brewLevel++
                 this.diceOutput = 'Epic success'
-                this.info.logBox.unshift("You tried something new today - and it worked! You think you understand how to actually brew them better.")
+                this.info.logBox.unshift(this.logOutput.brew.level3.EpicSuccess)
               }
 
             } else if (this.info.brew.brewLevel === 4) {
@@ -634,7 +635,7 @@ export default {
                 statsObject.suspicion += 10
 
                 this.diceOutput = 'Epic failure'
-                this.info.logBox.unshift("That potion wasn't right. Wasn't right at all. --Health -Sanity +Bloodlust +Suspicion")
+                this.info.logBox.unshift(this.logOutput.brew.level4.EpicFailure)
               } else if (roll < 50) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -642,7 +643,7 @@ export default {
                 statsObject.suspicion -= 5
 
                 this.diceOutput = 'Failure'
-                this.info.logBox.unshift("Failure")
+                this.info.logBox.unshift(this.logOutput.brew.level4.Failure)
               } else if (roll < 90) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -650,7 +651,7 @@ export default {
                 statsObject.suspicion -= 5
 
                 this.diceOutput = 'Success'
-                this.info.logBox.unshift("Success")
+                this.info.logBox.unshift(this.logOutput.brew.level4.Success)
               } else if (roll < 101) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -659,7 +660,7 @@ export default {
 
                 this.brewObject.brewLevel++
                 this.diceOutput = 'Epic success'
-                this.info.logBox.unshift("You tried something new today - and it worked! You think you understand how to actually brew them better.")
+                this.info.logBox.unshift(this.logOutput.brew.level4.EpicSuccess)
               }
 
             } else if (this.info.brew.brewLevel === 5) {
@@ -674,7 +675,7 @@ export default {
                 statsObject.suspicion += 10
 
                 this.diceOutput = 'Epic failure'
-                this.info.logBox.unshift("That potion wasn't right. Wasn't right at all. --Health -Sanity +Bloodlust +Suspicion")
+                this.info.logBox.unshift(this.logOutput.brew.level5.EpicFailure)
               } else if (roll < 50) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -682,7 +683,7 @@ export default {
                 statsObject.suspicion -= 5
 
                 this.diceOutput = 'Failure'
-                this.info.logBox.unshift("Failure")
+                this.info.logBox.unshift(this.logOutput.brew.level5.Failure)
               } else if (roll < 90) {
                 statsObject.health += 5
                 statsObject.sanity += 10
@@ -690,16 +691,16 @@ export default {
                 statsObject.suspicion -= 5
 
                 this.diceOutput = 'Success'
-                this.info.logBox.unshift("Success")
+                this.info.logBox.unshift(this.logOutput.brew.level5.Success)
               } else if (roll < 101) {
                 this.info.endGame = true
                 this.diceOutput = 'Epic success'
-                this.info.logBox.unshift("Hope rushing through you, you drink the potion. A rush of power flows through you, and you know you did it. No more will you be plauged by the curse of the wolf.")
+                this.info.logBox.unshift(this.logOutput.brew.level5.EpicSuccess)
               }
 
             }
         } else {
-            this.info.logBox.unshift("You consider brewing something, but realize you don't have enough supplies to do so. Maybe you should try your luck gathering some herbs.")
+            this.info.logBox.unshift(this.logOutput.brew.unable)
         }
 
         this.handleTime(timeObject)
