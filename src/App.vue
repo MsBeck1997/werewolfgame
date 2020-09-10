@@ -169,11 +169,11 @@ export default {
                     Unavailable: "You think about attending church, but no services are taking place right now. You should come back when one is happening." },
             rest: { Success: "Resting tames the beast, at least a little. You feel refreshed, if not a little hungry. +Bloodlust -Suspicion +Health +Sanity",
                     Failure: "You try to rest your eyes, but nightmares plague you. Sounds of death, images of fear, scents of blood seep into your dreams. You don't feel rested. You don't feel sane. +Bloodlust  +Suspicion", },
-            gather: { EpicSuccess: "",
-                    Success: "",
-                    Failure: "",
-                    EpicFailure: "" },
-            brew: { level0: { EpicSuccess: "testing brew",
+            gather: { EpicSuccess: "The gods must be smiling upon you today, as you had great luck collecting. +2 herbs",
+                    Success: "You found some herbs along a bank, and brought them back. +1 herb",
+                    Failure: "Bad luck. Irritated, you head back empty handed.",
+                    EpicFailure: "On your way back from collecting, you notice one of the herbs has a funny look. You recognize it as poisonous. You paw through the rest of the herbs, but have trouble differentiating between safe and non-safe. You toss them all to be safe." },
+            brew: { level0: { EpicSuccess: "",
                               Success: "",
                               Failure: "",
                               EpicFailure: "" },
@@ -432,18 +432,18 @@ export default {
       let roll = Math.floor(Math.random() * 100)
         if (roll < 11) {
           this.diceOutput = 'Epic failure'
-          this.info.logBox.unshift("On your way back from collecting, you notice one of the herbs has a funny look. You recognize it as poisonous. You paw through the rest of the herbs, but have trouble differentiating between safe and non-safe. You toss them all to be safe.")
+          this.info.logBox.unshift(this.logOutput.gather.EpicFailure)
         } else if (roll < 50) {
           this.diceOutput = 'Failure'
-          this.info.logBox.unshift("Bad luck. Irritated, you head back empty handed.")
+          this.info.logBox.unshift(this.logOutput.gather.Failure)
         } else if (roll < 90) {
           brewObject.herbs++
           this.diceOutput = 'Success'
-          this.info.logBox.unshift("You found some herbs along a bank, and brought them back. +1 herb")
+          this.info.logBox.unshift(this.logOutput.gather.Success)
         } else if (roll < 101) {
           brewObject.herbs += 2
           this.diceOutput = 'Epic success'
-          this.info.logBox.unshift("The gods must be smiling upon you today, as you had great luck collecting. +2 herbs")
+          this.info.logBox.unshift(this.logOutput.gather.EpicSuccess)
         }
 
         this.handleTime(timeObject)
