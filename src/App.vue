@@ -147,16 +147,54 @@ export default {
             logBox: ['First Log', ],
             time: { currentTime: 1, day: 1, timeOfDay: 'Morning', moonStatus: 'Waning Moon', transformCountdown: '3 days'},
             stats: { health: 75, sanity: 75, bloodlust: 15, suspicion: 0 },
-            brew: { brewLevel: 0, herbs: 0},
+            brew: { brewLevel: 0, herbs: 20},
             endGame: false,
         },
         logOutput: {
-            transformation: { moonChange: "transform on moon", healthChange: "transform on health", },
-            hunt: { EpicSuccess: "testing hunt"},
-            church: { EpicSuccess: "testing church"},
-            rest: { Success: ["testing rest", "testing 2", "testing 3"] },
-            gather: { EpicSuccess: "testing gather"},
-            brew: { EpicSuccess: "testing brew"}
+            transformation: { moonChange: "transform on moon",
+                              healthChange: "transform on health",
+                              sanityChange: "",
+                              bloodlustChange: "",
+                              suspicionChange: "" },
+            hunt: { EpicSuccess: "",
+                    Success: "",
+                    Failure: "",
+                    EpicFailure: "" },
+            church: { EpicSuccess: "You feel inspired by the sermon given today. You can feel the strength that hope gives you flowing though your veins. --Suspicion -Bloodlust ++Sanity",
+                    Success: "You grow weary of the standing, singing, and prayer some days. But fitting in is never entertaining. -Suspicion +Bloodlust -Sanity",
+                    Failure: "The whole point of attending church is to prevent the villagers from suspecting something is wrong. Sitting in the back doesn't exactly make you noticeable. +Bloodlust -Sanity",
+                    EpicFailure: "The preacher drones on and on, doing little more than reading out loud from his book. You doze off in the pew, and awaken to dirty looks from the other churchgoers. You leave hurriedly, trying to avoid causing more damage to your reputation. ++Suspicion +Bloodlust -Sanity",
+                    Unavailable: "You think about attending church, but no services are taking place right now. You should come back when one is happening." },
+            rest: { Success: "test",
+                    Failure: "You try to rest your eyes, but nightmares plague you. Sounds of death, images of fear, scents of blood seep into your dreams. You don't feel rested. You don't feel sane. +Bloodlust  +Suspicion", },
+            gather: { EpicSuccess: "",
+                    Success: "",
+                    Failure: "",
+                    EpicFailure: "" },
+            brew: { level0: { EpicSuccess: "testing brew",
+                              Success: "",
+                              Failure: "",
+                              EpicFailure: "" },
+                    level1: { EpicSuccess: "",
+                              Success: "",
+                              Failure: "",
+                              EpicFailure: "" },
+                    level2: { EpicSuccess: "",
+                              Success: "",
+                              Failure: "",
+                              EpicFailure: "" },
+                    level3: { EpicSuccess: "",
+                              Success: "",
+                              Failure: "",
+                              EpicFailure: "" },
+                    level4: { EpicSuccess: "",
+                              Success: "",
+                              Failure: "",
+                              EpicFailure: "" },
+                    level5: { EpicSuccess: "",
+                              Success: "",
+                              Failure: "",
+                              EpicFailure: "" } },
         }
     }
   },
@@ -328,30 +366,30 @@ export default {
             statsObject.suspicion += 25
 
             this.diceOutput = 'Epic failure'
-            this.info.logBox.unshift("The preacher drones on and on, doing little more than reading out loud from his book. You doze off in the pew, and awaken to dirty looks from the other churchgoers. You leave hurriedly, trying to avoid causing more damage to your reputation. ++Suspicion +Bloodlust -Sanity")
+            this.info.logBox.unshift(this.logOutput.church.EpicFailure)
           } else if (roll < 50) {
             statsObject.sanity -= 5
             statsObject.bloodlust += 5
 
             this.diceOutput = 'Failure'
-            this.info.logBox.unshift("The whole point of attending church is to prevent the villagers from suspecting something is wrong. Sitting in the back doesn't exactly make you noticeable. +Bloodlust -Sanity")
+            this.info.logBox.unshift(this.logOutput.church.Failure)
           } else if (roll < 90) {
             statsObject.sanity -= 5
             statsObject.bloodlust += 5
             statsObject.suspicion -= 10
 
             this.diceOutput = 'Success'
-            this.info.logBox.unshift("You grow weary of the standing, singing, and prayer some days. But fitting in is never entertaining. -Suspicion +Bloodlust -Sanity")
+            this.info.logBox.unshift()
           } else if (roll < 101) {
             statsObject.sanity += 20
             statsObject.bloodlust -= 10
             statsObject.suspicion -= 20
 
             this.diceOutput = 'Epic success'
-            this.info.logBox.unshift("You feel inspired by the sermon given today. You can feel the strength that hope gives you flowing though your veins. --Suspicion -Bloodlust ++Sanity")
+            this.info.logBox.unshift(this.logOutput.church.Success)
           }
         } else {
-            this.info.logBox.unshift("You think about attending church, but no services are taking place right now. You should come back when one is happening.")
+            this.info.logBox.unshift(this.logOutput.church.Unavailable)
         }
 
         this.handleTime(timeObject)
@@ -369,7 +407,7 @@ export default {
             statsObject.bloodlust += 5
             statsObject.suspicion += 5
 
-            this.info.logBox.unshift("You try to rest your eyes, but nightmares plague you. Sounds of death, images of fear, scents of blood seep into your dreams. You don't feel rested. You don't feel sane. +Bloodlust  +Suspicion")
+            this.info.logBox.unshift(this.logOutput.rest.Failure)
         } else {
             statsObject.health += 5
             statsObject.sanity += 10
@@ -377,7 +415,7 @@ export default {
             statsObject.suspicion -= 5
 
             // this.info.logBox.unshift("Dreams consume you and you frolic in a better time. You awake feeling slightly better, if not slightly hungry. +Health  +Sanity  +Bloodlust  -Suspicion")
-            this.info.logBox.unshift(this.logOutput.rest[0])
+            this.info.logBox.unshift(this.logOutput.rest.Success)
         }
 
         this.handleTime(timeObject)
