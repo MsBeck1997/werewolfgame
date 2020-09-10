@@ -28,15 +28,15 @@
 
                 <!-- Time -->
                 <div class="col-2">
-                    Time: {{ info.time.timeOfDay }}
-                    <br />
-                    Day: {{ info.time.day }}
+                  <span>Time: {{ info.time.timeOfDay }}</span>
+                  <br />
+                  <span>Day: {{ info.time.day }}</span>
                 </div>
 
                 <div class="col-2">
-                    {{ info.time.moonStatus }}
-                    <br />
-                    Transform in: {{ info.time.transformCountdown }}
+                  <span>{{ info.time.moonStatus }}</span>
+                  <br />
+                  <span>Transform in: {{ info.time.transformCountdown }}</span>
                 </div>
             </div>
         </b-container>
@@ -56,7 +56,7 @@
                           <b-button squared :disabled="info.endGame" @click="hunt(info.time, info.stats)">Icon <br /> Hunt</b-button>
                     </div>
                     <div class="col-8">
-                        Take to the nearby forest and attempt to find something to eat.
+                      <span>Take to the nearby forest and attempt to find something to eat.</span>
                     </div>
                 </div>
 
@@ -66,7 +66,8 @@
                           <b-button squared :disabled="info.endGame" @click="church(info.time, info.stats)">Icon <br /> Church</b-button>
                     </div>
                     <div class="col-8">
-                        In the morning or afternoon, attend a church service to appear normal.
+                      <span>In the morning or afternoon, attend a church service to appear normal.
+                      </span>
                     </div>
                 </div>
 
@@ -76,7 +77,7 @@
                         <b-button squared :disabled="info.endGame" @click="rest(info.time, info.stats)">Icon <br /> Rest</b-button>
                     </div>
                     <div class="col-8">
-                        Take some time to rest and recover.
+                      <span>Take some time to rest and recover.</span>
                     </div>
                 </div>
 
@@ -86,8 +87,10 @@
                         <b-button squared :disabled="info.endGame" @click="gather(info.time, info.brew, info.stats)">Icon <br /> Gather</b-button>
                     </div>
                     <div class="col-8">
+                      <span>
                         Head into the nearby forest to search for herbs. Takes two hours. <br />
                         Current Herbs: {{ info.brew.herbs }}
+                      </span>
                     </div>
                 </div>
 
@@ -97,7 +100,9 @@
                         <b-button squared :disabled="info.endGame" @click="brew(info.time, info.brew, info.stats)">Icon <br /> Brew</b-button>
                     </div>
                     <div class="col-8">
+                      <span>
                         Use three gathered herbs to brew potions. Potions have many effects, including curing your curse.
+                      </span>
                     </div>
                 </div>
             </b-container>
